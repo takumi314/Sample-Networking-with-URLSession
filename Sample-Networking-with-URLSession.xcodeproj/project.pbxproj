@@ -15,6 +15,8 @@
 		E12084071F965CF7000E63C5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E12084061F965CF7000E63C5 /* Assets.xcassets */; };
 		E120840A1F965CF7000E63C5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E12084081F965CF7000E63C5 /* LaunchScreen.storyboard */; };
 		E12084151F965CF8000E63C5 /* Sample_Networking_with_URLSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12084141F965CF8000E63C5 /* Sample_Networking_with_URLSessionTests.swift */; };
+		E12084211F966B5F000E63C5 /* NetworkEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12084201F966B5F000E63C5 /* NetworkEngine.swift */; };
+		E12084221F966B5F000E63C5 /* NetworkEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12084201F966B5F000E63C5 /* NetworkEngine.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,7 @@
 		E12084101F965CF8000E63C5 /* Sample-Networking-with-URLSessionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sample-Networking-with-URLSessionTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E12084141F965CF8000E63C5 /* Sample_Networking_with_URLSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sample_Networking_with_URLSessionTests.swift; sourceTree = "<group>"; };
 		E12084161F965CF8000E63C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E12084201F966B5F000E63C5 /* NetworkEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkEngine.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +126,7 @@
 		E120841F1F96691B000E63C5 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				E12084201F966B5F000E63C5 /* NetworkEngine.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -351,6 +355,7 @@
 			files = (
 				E12084021F965CF7000E63C5 /* ViewController.swift in Sources */,
 				E12084001F965CF7000E63C5 /* AppDelegate.swift in Sources */,
+				E12084211F966B5F000E63C5 /* NetworkEngine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,6 +363,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E12084221F966B5F000E63C5 /* NetworkEngine.swift in Sources */,
 				E12084151F965CF8000E63C5 /* Sample_Networking_with_URLSessionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
