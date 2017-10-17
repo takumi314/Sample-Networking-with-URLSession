@@ -100,6 +100,7 @@
 		E12083FE1F965CF7000E63C5 /* Sample-Networking-with-URLSession */ = {
 			isa = PBXGroup;
 			children = (
+				E120841F1F96691B000E63C5 /* Networking */,
 				E12083FF1F965CF7000E63C5 /* AppDelegate.swift */,
 				E12084011F965CF7000E63C5 /* ViewController.swift */,
 				E12084031F965CF7000E63C5 /* Main.storyboard */,
@@ -117,6 +118,13 @@
 				E12084161F965CF8000E63C5 /* Info.plist */,
 			);
 			path = "Sample-Networking-with-URLSessionTests";
+			sourceTree = "<group>";
+		};
+		E120841F1F96691B000E63C5 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		F87E8EFDC85AF226CC606C9A /* Frameworks */ = {
