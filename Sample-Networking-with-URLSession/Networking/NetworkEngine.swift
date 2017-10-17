@@ -7,3 +7,18 @@
 //
 
 import Foundation
+
+protocol NetworkEngine {
+    typealias Handler = (URL?, URLResponse?, Error?) -> Void
+    func performRequest(for url: URL, completionHandler: @escaping Handler)
+}
+
+extension URLSession: NetworkEngine {
+    typealias Handler = NetworkEngine.Handler
+
+    func performRequest(for url: URL, completionHandler: @escaping NetworkEngine.Handler) {
+        let task = self.downloadTask(with: url, completionHandler: completionHandler)
+        task.resume()
+    }
+
+}
