@@ -17,6 +17,8 @@
 		E12084151F965CF8000E63C5 /* Sample_Networking_with_URLSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12084141F965CF8000E63C5 /* Sample_Networking_with_URLSessionTests.swift */; };
 		E12084211F966B5F000E63C5 /* NetworkEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12084201F966B5F000E63C5 /* NetworkEngine.swift */; };
 		E12084221F966B5F000E63C5 /* NetworkEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12084201F966B5F000E63C5 /* NetworkEngine.swift */; };
+		E12084241F967139000E63C5 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12084231F967139000E63C5 /* Downloader.swift */; };
+		E12084251F967139000E63C5 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12084231F967139000E63C5 /* Downloader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,7 @@
 		E12084141F965CF8000E63C5 /* Sample_Networking_with_URLSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sample_Networking_with_URLSessionTests.swift; sourceTree = "<group>"; };
 		E12084161F965CF8000E63C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E12084201F966B5F000E63C5 /* NetworkEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkEngine.swift; sourceTree = "<group>"; };
+		E12084231F967139000E63C5 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				E12084201F966B5F000E63C5 /* NetworkEngine.swift */,
+				E12084231F967139000E63C5 /* Downloader.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -355,6 +359,7 @@
 			files = (
 				E12084021F965CF7000E63C5 /* ViewController.swift in Sources */,
 				E12084001F965CF7000E63C5 /* AppDelegate.swift in Sources */,
+				E12084241F967139000E63C5 /* Downloader.swift in Sources */,
 				E12084211F966B5F000E63C5 /* NetworkEngine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -365,6 +370,7 @@
 			files = (
 				E12084221F966B5F000E63C5 /* NetworkEngine.swift in Sources */,
 				E12084151F965CF8000E63C5 /* Sample_Networking_with_URLSessionTests.swift in Sources */,
+				E12084251F967139000E63C5 /* Downloader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
