@@ -19,6 +19,8 @@
 		E12084221F966B5F000E63C5 /* NetworkEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12084201F966B5F000E63C5 /* NetworkEngine.swift */; };
 		E12084241F967139000E63C5 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12084231F967139000E63C5 /* Downloader.swift */; };
 		E12084251F967139000E63C5 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12084231F967139000E63C5 /* Downloader.swift */; };
+		E12084271F97B658000E63C5 /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12084261F97B658000E63C5 /* DataLoader.swift */; };
+		E12084281F97B658000E63C5 /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12084261F97B658000E63C5 /* DataLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +52,7 @@
 		E12084161F965CF8000E63C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E12084201F966B5F000E63C5 /* NetworkEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkEngine.swift; sourceTree = "<group>"; };
 		E12084231F967139000E63C5 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
+		E12084261F97B658000E63C5 /* DataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +134,7 @@
 			children = (
 				E12084201F966B5F000E63C5 /* NetworkEngine.swift */,
 				E12084231F967139000E63C5 /* Downloader.swift */,
+				E12084261F97B658000E63C5 /* DataLoader.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -357,6 +361,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E12084271F97B658000E63C5 /* DataLoader.swift in Sources */,
 				E12084021F965CF7000E63C5 /* ViewController.swift in Sources */,
 				E12084001F965CF7000E63C5 /* AppDelegate.swift in Sources */,
 				E12084241F967139000E63C5 /* Downloader.swift in Sources */,
@@ -368,6 +373,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E12084281F97B658000E63C5 /* DataLoader.swift in Sources */,
 				E12084221F966B5F000E63C5 /* NetworkEngine.swift in Sources */,
 				E12084151F965CF8000E63C5 /* Sample_Networking_with_URLSessionTests.swift in Sources */,
 				E12084251F967139000E63C5 /* Downloader.swift in Sources */,
