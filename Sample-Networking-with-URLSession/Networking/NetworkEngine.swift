@@ -9,16 +9,23 @@
 import Foundation
 
 protocol NetworkEngine {
-    typealias Handler = (URL?, URLResponse?, Error?) -> Void
-    func performRequest(for url: URL, completionHandler: @escaping Handler)
+    typealias DataHandler = (Data?, URLResponse?, Error?) -> Void
+    typealias URLHandler = (URL?, URLResponse?, Error?) -> Void
+    func performRequest(for url: URL, completionHandler: @escaping DataHandler)
+    func performDownload(for url: URL, completionHadler: @escaping NetworkEngine.URLHandler)
 }
 
 extension URLSession: NetworkEngine {
-    typealias Handler = NetworkEngine.Handler
+    typealias DataHandler = NetworkEngine.DataHandler
+    typealias URLHandler = NetworkEngine.URLHandler
 
-    func performRequest(for url: URL, completionHandler: @escaping NetworkEngine.Handler) {
-        let task = self.downloadTask(with: url, completionHandler: completionHandler)
+    func performRequest(for url: URL, completionHandler: @escaping DataHandler) {
+        let task = dataTask(with: url, completionHandler: completionHandler)
         task.resume()
     }
 
+    func performDownload(for url: URL, completionHadler: @escaping URLHandler) {
+        let task = downloadTask(with: url, completionHandler: completionHadler)
+        task.resume()
+    }
 }
