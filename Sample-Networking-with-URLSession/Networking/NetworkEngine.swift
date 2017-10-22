@@ -29,3 +29,24 @@ extension URLSession: NetworkEngine {
         task.resume()
     }
 }
+
+class NetworkEngineMock: NetworkEngine {
+    typealias DataHandler = NetworkEngine.DataHandler
+    typealias URLHandler = NetworkEngine.URLHandler
+
+    var requestedURL: URL?
+
+    func performRequest(for url: URL, completionHandler: @escaping DataHandler) {
+        requestedURL = url
+
+        let data = "Hello world".data(using: .utf8)
+        completionHandler(data, nil, nil)
+    }
+    func performDownload(for url: URL, completionHadler: @escaping URLHandler) {
+        requestedURL = url
+
+        let pathURL = URL(fileURLWithPath: "file:///Document/hoge")
+        completionHadler(pathURL, nil, nil)
+    }
+}
+

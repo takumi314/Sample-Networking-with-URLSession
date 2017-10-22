@@ -25,6 +25,38 @@ class Sample_Networking_with_URLSessionTests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
+
+    func testLoad() {
+        // 1.Mock
+        let engine = NetworkEngineMock()
+
+        // 2.Target
+        let loader = DataLoader(engine)
+        var result: DataLoader.Result?
+        let url = URL(fileURLWithPath: "my/API")
+
+        loader.load(from: url) {
+            result = $0
+        }
+
+        XCTAssertEqual(engine.requestedURL, url)
+        XCTAssertEqual(result!, DataLoader.Result.data("Hello world".data(using: .utf8)!))
+    }
+
+    func testDownLoad() {
+        let engine = NetworkEngineMock()
+
+        let loader = Downloader(engine)
+        var result: Downloader.Result?
+        let url = URL(fileURLWithPath: "my/API")
+
+        loader.load(from: url) {
+            result = $0
+        }
+
+        XCTAssertEqual(engine.requestedURL, url)
+        XCTAssertEqual(result!, .data(URL(fileURLWithPath: "file:///Document/hoge")) )
+    }
     
     func testPerformanceExample() {
         // This is an example of a performance test case.
