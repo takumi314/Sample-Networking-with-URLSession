@@ -20,6 +20,7 @@
 		E1611F651F9E3C4100DB8E95 /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1611F621F9E3C4100DB8E95 /* DataLoader.swift */; };
 		E1611F661F9E3C4100DB8E95 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1611F631F9E3C4100DB8E95 /* Downloader.swift */; };
 		E1611F671F9E3C4100DB8E95 /* NetworkEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1611F641F9E3C4100DB8E95 /* NetworkEngine.swift */; };
+		E1611F6B1F9E46B500DB8E95 /* DownloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1611F6A1F9E46B500DB8E95 /* DownloadService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		E1611F621F9E3C4100DB8E95 /* DataLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataLoader.swift; sourceTree = "<group>"; };
 		E1611F631F9E3C4100DB8E95 /* Downloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		E1611F641F9E3C4100DB8E95 /* NetworkEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkEngine.swift; sourceTree = "<group>"; };
+		E1611F6A1F9E46B500DB8E95 /* DownloadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 		E12083FE1F965CF7000E63C5 /* Sample-Networking-with-URLSession */ = {
 			isa = PBXGroup;
 			children = (
+				E1611F691F9E466100DB8E95 /* Services */,
 				E1611F681F9E444700DB8E95 /* Others */,
 				E1611F611F9E3C4100DB8E95 /* Networking */,
 				E120842A1F9D01C0000E63C5 /* Models */,
@@ -156,6 +159,14 @@
 				E12083FF1F965CF7000E63C5 /* AppDelegate.swift */,
 			);
 			path = Others;
+			sourceTree = "<group>";
+		};
+		E1611F691F9E466100DB8E95 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E1611F6A1F9E46B500DB8E95 /* DownloadService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		F87E8EFDC85AF226CC606C9A /* Frameworks */ = {
@@ -381,6 +392,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1611F651F9E3C4100DB8E95 /* DataLoader.swift in Sources */,
+				E1611F6B1F9E46B500DB8E95 /* DownloadService.swift in Sources */,
 				E120842C1F9D0215000E63C5 /* Download.swift in Sources */,
 				E1611F671F9E3C4100DB8E95 /* NetworkEngine.swift in Sources */,
 				E1611F661F9E3C4100DB8E95 /* Downloader.swift in Sources */,
