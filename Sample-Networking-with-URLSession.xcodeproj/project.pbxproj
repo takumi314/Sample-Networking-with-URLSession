@@ -110,9 +110,9 @@
 		E12083FE1F965CF7000E63C5 /* Sample-Networking-with-URLSession */ = {
 			isa = PBXGroup;
 			children = (
+				E1611F681F9E444700DB8E95 /* Others */,
 				E1611F611F9E3C4100DB8E95 /* Networking */,
 				E120842A1F9D01C0000E63C5 /* Models */,
-				E12083FF1F965CF7000E63C5 /* AppDelegate.swift */,
 				E12084011F965CF7000E63C5 /* ViewController.swift */,
 				E12084031F965CF7000E63C5 /* Main.storyboard */,
 				E12084061F965CF7000E63C5 /* Assets.xcassets */,
@@ -148,6 +148,14 @@
 				E1611F641F9E3C4100DB8E95 /* NetworkEngine.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		E1611F681F9E444700DB8E95 /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				E12083FF1F965CF7000E63C5 /* AppDelegate.swift */,
+			);
+			path = Others;
 			sourceTree = "<group>";
 		};
 		F87E8EFDC85AF226CC606C9A /* Frameworks */ = {
