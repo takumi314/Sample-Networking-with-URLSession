@@ -13,6 +13,8 @@ protocol NetworkEngine {
     typealias URLHandler = (URL?, URLResponse?, Error?) -> Void
     func performRequest(for url: URL, completionHandler: @escaping DataHandler)
     func performDownload(for url: URL, completionHadler: @escaping NetworkEngine.URLHandler) -> URLSessionDownloadTask
+    func performDownload(with resumeData: Data) -> URLSessionDownloadTask
+    func performDownload(with url: URL) -> URLSessionDownloadTask
 }
 
 extension URLSession: NetworkEngine {
@@ -29,6 +31,11 @@ extension URLSession: NetworkEngine {
         task.resume()
         return task
     }
+    func performDownload(with resumeData: Data) -> URLSessionDownloadTask {
+        return downloadTask(withResumeData: resumeData)
+    }
+    func performDownload(with url: URL) -> URLSessionDownloadTask {
+        return downloadTask(with: url)
     }
 }
 
@@ -56,6 +63,13 @@ class NetworkEngineMock: NetworkEngine {
 
         let pathURL = URL(fileURLWithPath: "file:///Document/hoge")
         completionHadler(pathURL, nil, nil)
+        return URLSessionDownloadTask()
+    }
+    func performDownload(with resumeData: Data) -> URLSessionDownloadTask {
+        return URLSessionDownloadTask()
+    }
+    func performDownload(with url: URL) -> URLSessionDownloadTask {
+        requestedURL = url
         return URLSessionDownloadTask()
     }
 }
