@@ -12,7 +12,7 @@ protocol NetworkEngine {
     typealias DataHandler = (Data?, URLResponse?, Error?) -> Void
     typealias URLHandler = (URL?, URLResponse?, Error?) -> Void
     func performRequest(for url: URL, completionHandler: @escaping DataHandler)
-    func performDownload(for url: URL, completionHadler: @escaping NetworkEngine.URLHandler)
+    func performDownload(for url: URL, completionHadler: @escaping NetworkEngine.URLHandler) -> URLSessionDownloadTask
 }
 
 extension URLSession: NetworkEngine {
@@ -24,11 +24,20 @@ extension URLSession: NetworkEngine {
         task.resume()
     }
 
-    func performDownload(for url: URL, completionHadler: @escaping URLHandler) {
+    func performDownload(for url: URL, completionHadler: @escaping URLHandler) -> URLSessionDownloadTask {
         let task = downloadTask(with: url, completionHandler: completionHadler)
         task.resume()
+        return task
+    }
     }
 }
+
+
+/**:
+
+ The Mock for XCTest
+
+ */
 
 class NetworkEngineMock: NetworkEngine {
     typealias DataHandler = NetworkEngine.DataHandler
@@ -42,11 +51,12 @@ class NetworkEngineMock: NetworkEngine {
         let data = "Hello world".data(using: .utf8)
         completionHandler(data, nil, nil)
     }
-    func performDownload(for url: URL, completionHadler: @escaping URLHandler) {
+    func performDownload(for url: URL, completionHadler: @escaping URLHandler) -> URLSessionDownloadTask {
         requestedURL = url
 
         let pathURL = URL(fileURLWithPath: "file:///Document/hoge")
         completionHadler(pathURL, nil, nil)
+        return URLSessionDownloadTask()
     }
 }
 

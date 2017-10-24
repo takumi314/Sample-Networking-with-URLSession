@@ -50,9 +50,10 @@ class Sample_Networking_with_URLSessionTests: XCTestCase {
         var result: Downloader.Result?
         let url = URL(fileURLWithPath: "my/API")
 
-        loader.load(from: url) {
+        let _ = loader.load(from: url) {
             result = $0
         }
+        
 
         XCTAssertEqual(engine.requestedURL, url)
         XCTAssertEqual(result!, .data(URL(fileURLWithPath: "file:///Document/hoge")) )

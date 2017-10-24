@@ -32,8 +32,8 @@ class Downloader {
         self.engine = engine
     }
 
-    func load(from url: URL, completionHadler: @escaping (Result) -> Void) {
-        engine.performDownload(for: url) { (url, response, error) in
+    func load(from url: URL, completionHadler: @escaping (Result) -> Void) -> URLSessionDownloadTask {
+        return engine.performDownload(for: url) { (url, response, error) in
             if let error = error {
                 return completionHadler(.error(error))
             }
@@ -72,6 +72,13 @@ class Downloader {
 
             completionHadler(.data(url))
         }
+    }
+
+    func load(with resumeData: Data) -> URLSessionDownloadTask {
+        return engine.performDownload(with: resumeData)
+    }
+    func load(from url: URL) -> URLSessionDownloadTask {
+        return engine.performDownload(with: url)
     }
 
 }
