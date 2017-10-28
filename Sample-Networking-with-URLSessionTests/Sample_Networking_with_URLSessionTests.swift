@@ -63,7 +63,7 @@ class Sample_Networking_with_URLSessionTests: XCTestCase {
         XCTAssertNotEqual(d?.index, track.index)
     }
 
-    func testReplace() {
+    func testConvert() {
         let engine = NetworkEngineMock()
         let service = SearchingService(engine)
         let searchTerm = "one two three"
