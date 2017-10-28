@@ -13,62 +13,77 @@ enum Result {
     case error(Error)
 }
 
-enum APIRequest {
-
+protocol RestClient {
     typealias CompletionHandler = (Data?, URLResponse?, Error?) -> Void
+    func request(with url: URL, delegate: URLSessionDelegate, _ completionHandler: @escaping RestClient.CompletionHandler)
+}
 
-    case get
-    case put
-    case post
-    case delete
-
-    func request(_ method: APIRequest, completion: APIRequest.CompletionHandler) {
-        switch self {
-        case .get:
-            break
-        case .post:
-            break
-        default:
-            break
-        }
+extension RestClient {
+    func request(with url: URL, delegate: URLSessionDelegate, _ completionHandler: @escaping RestClient.CompletionHandler) {
+        let config = URLSessionConfiguration.background(withIdentifier: "SeachingSessionConfiguration")
+        URLSession(configuration: config, delegate: delegate, delegateQueue: nil)
+            .dataTask(with: url) { (data, response, error) in
+                completionHandler(data, response, error)
+            }
+            .resume()
     }
 }
 
-protocol RestClient {
-    func request(with url: URL, _ completionHandler: @escaping APIRequest.CompletionHandler)
+protocol APIRequest {
+    
 }
 
 class SearchAPIConfiguration {
-    typealias BaseURL = String
+    typealias Host = String
     typealias Method = String
     typealias Terms = [String]
     typealias Coutory = String
     typealias Entity = String
     typealias Attribute = String
     typealias Lang = String
-    typealias RequestURL = (BaseURL, Method, Terms?, Coutory?, Entity?, Attribute?, Lang?)
+    typealias RequestURL = (Host, Method, Terms?, Coutory?, Entity?, Attribute?, Lang?)
 
-    let path = Bundle.main.path(forResource: "iTunes", ofType: "plist")
-
-    private let requestURL: RequestURL
-
-    init(_ path: String) {
-        self.requestURL = SearchAPIConfiguration.decode(contentsOf: path)
+    struct API {
+        let host: Host
+        let method: Method
+        var terms: Terms?
+        var countory: Coutory?
+        var entity: Entity?
+        var attribute: Attribute?
+        var lang: Lang?
     }
 
-    static func decode(contentsOf path: String) -> RequestURL {
+    static let api: () -> SearchAPIConfiguration.API
+        = { let c = SearchAPIConfiguration().requestURL
+            return API(host: c.0,
+                       method: c.1,
+                       terms: c.2,
+                       countory: c.3,
+                       entity: c.5,
+                       attribute: c.5,
+                       lang: c.6)
+        }
+
+    private static let path = Bundle.main.path(forResource: "iTunes", ofType: "plist")
+
+    private let requestURL: RequestURL
+    init() {
+        self.requestURL = SearchAPIConfiguration.decode(contentsOf: SearchAPIConfiguration.path!)
+    }
+
+    private static func decode(contentsOf path: String) -> RequestURL {
         return decode(values: NSDictionary(contentsOfFile: path)!)
     }
 
     private static func decode(values dictionary: NSDictionary) -> RequestURL {
-        let endpoint    = dictionary.value(forKey: "endpoint") as! String
+        let host        = dictionary.value(forKey: "host") as! String
         let method      = dictionary.value(forKey: "method") as! String
         let country     = dictionary.value(forKey: "country") as? String
         let entity      = dictionary.value(forKey: "entity") as? String
         let attribute   = dictionary.value(forKey: "attribute") as? String
         let lang        = dictionary.value(forKey: "lang") as? String
 
-        return (endpoint, method, [], country, entity, attribute, lang)
+        return (host, method, [], country, entity, attribute, lang)
     }
 
 }
