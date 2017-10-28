@@ -16,7 +16,7 @@ class SearchingService: NSObject {
     private var dataTask: URLSessionDataTask?
     private var tracks = [Track]()
     private var errorMessage = ""
-    private var api: SearchAPIConfiguration.APIComponents = SearchAPIConfiguration.api()
+    private var api: SearchAPIConfiguration.APIComponents = SearchAPIConfiguration.api
 
     ///
     /// インスタンス生成時に URLSessionConfiguration と URLSession の依存性を与える.
@@ -26,20 +26,8 @@ class SearchingService: NSObject {
     }
 
     func getResult(searchTerm: String, completion: @escaping QueryResult) {
-        guard var urlComponents = URLComponents(string: api.host + "/\(api.method)" ) else {
-            self.errorMessage += "URLComponents error:  invalid URL string" + "\n"
-            completion(nil, errorMessage)
-            return
-        }
-        // 1. searchTerm -> Query
-        let term = convert(from: searchTerm)
-        urlComponents.queryItems = [URLQueryItem(name: "media"    , value: "music"),
-                                    URLQueryItem(name: "entity"   , value: "song"),
-                                    URLQueryItem(name: "term"     , value: term)]
-        // 2. Query ->  URL
-        guard let url = urlComponents.url else {
+        guard let url = SearchAPIConfiguration.convertToURL(with: searchTerm) else {
             self.errorMessage += "URLComponents error: invalid URL.Query parameter" + "\n"
-            completion(nil, errorMessage)
             return
         }
         // 3. API request

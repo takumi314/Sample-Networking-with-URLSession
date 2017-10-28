@@ -34,21 +34,51 @@ protocol APIRequest {
 }
 
 class SearchAPIConfiguration {
+    typealias ErrorMessage = String
+
     struct APIComponents {
-        let host: String
-        let method: String
-        var terms: [String]
+        var host: String
+        var method: String
+        var terms: [String]?
         var country: String?
         var entity: String?
         var attribute: String?
         var lang: String?
+        var media: String?
     }
 
-    static let api: () -> SearchAPIConfiguration.APIComponents = {
-        return decode(from: path!)
+    static var api: APIComponents {
+        return decode(from: plistPath!)
     }
 
-    private static let path = Bundle.main.path(forResource: "iTunes", ofType: "plist")
+    static func convertToURL(with searchTerm: String) -> URL? {
+        let api = SearchAPIConfiguration.api
+        guard var urlComponents = URLComponents(string: "\(api.host)/\(api.method)") else {
+            print("URLComponents error:  invalid Host's URL " + "\n")
+            return nil
+        }
+        // 1. searchTerm -> Query
+        let term = SearchAPIConfiguration.convert(from: searchTerm)
+        urlComponents.queryItems = [URLQueryItem(name: "media"    , value: api.media),
+                                    URLQueryItem(name: "entity"   , value: api.entity),
+                                    URLQueryItem(name: "term"     , value: term)]
+        // 2. Query ->  URL
+        guard let url = urlComponents.url else {
+            print("URLComponents error: invalid URL.Query parameter" + "\n")
+            return nil
+        }
+        print(url)
+        return url
+    }
+
+    // MARK: - Private
+    
+    static let plistPath = Bundle(for: SearchAPIConfiguration.self).url(forResource: "iTunes", withExtension: "plist")
+
+    private static func convert(from term: String) -> String {
+        return term.components(separatedBy: CharacterSet.whitespaces).joined(separator: "+")
+    }
+
     private static func decode(from path: String) -> APIComponents {
         guard let dictionary = NSDictionary(contentsOfFile: path) else {
             return APIComponents(host: "", method: "", terms: [], country: nil, entity: nil, attribute: nil, lang: nil)
