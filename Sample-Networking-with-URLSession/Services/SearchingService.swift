@@ -70,7 +70,6 @@ class SearchingService: NSObject {
         tracks.removeAll()
         do {
             self.tracks  = try JSONDecoder().decode(SearchResults.self, from: data).results
-            self.count = try JSONDecoder().decode(SearchResults.self, from: data).number
         } catch let parseError {
             errorMessage += "json convert failed in JSONDecoder: \(parseError.localizedDescription)\n"
         }

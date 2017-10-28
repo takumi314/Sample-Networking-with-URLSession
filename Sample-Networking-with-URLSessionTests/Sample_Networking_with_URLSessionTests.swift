@@ -10,6 +10,14 @@ import XCTest
 @testable import Sample_Networking_with_URLSession
 
 class Sample_Networking_with_URLSessionTests: XCTestCase {
+
+    class JsonProvider {
+        static func getData() -> Data? {
+            let testPath = Bundle(for: Sample_Networking_with_URLSessionTests.self)
+            guard let path = testPath.url(forResource: "test", withExtension: "json") else { return nil }
+            return try? Data(contentsOf: path, options: .mappedIfSafe)
+        }
+    }
     
     override func setUp() {
         super.setUp()
@@ -24,6 +32,44 @@ class Sample_Networking_with_URLSessionTests: XCTestCase {
     func testExample() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+    }
+
+    func testMapping() {
+        let engine = NetworkEngineMock()
+        let service = SearchingService(engine)
+        let jsonData = JsonProvider.getData()
+
+        service.mapping(jsonData!)
+        print(service.tracks)
+
+        let track = service.tracks.first!
+        XCTAssertEqual(service.tracks.count, 25)
+        XCTAssertEqual(track.name, "Better Together")
+        XCTAssertEqual(track.artist, "Jack Johnson")
+    }
+
+    func testTrack() {
+        let url = URL(string: "https://itunes.apple.com/search")!
+        let track = Track(name: "Don't talk any more", artist: "Cherlie", previewURL: url , index: 10)
+        let jsonData = try? JSONEncoder().encode(track)
+        XCTAssertNotNil(jsonData)
+        print(jsonData!)
+
+        let d = try? JSONDecoder().decode(Track.self, from: jsonData!)
+        XCTAssertNotNil(d)
+        XCTAssertEqual(d?.name, track.name)
+        XCTAssertEqual(d?.artist, track.artist)
+        XCTAssertEqual(d?.previewURL, track.previewURL)
+        XCTAssertNotEqual(d?.index, track.index)
+    }
+
+    func testReplace() {
+        let engine = NetworkEngineMock()
+        let service = SearchingService(engine)
+        let searchTerm = "one two three"
+
+        let term = service.replace(with: searchTerm)
+        XCTAssertEqual(term, "one+two+three")
     }
 
     func testLoad() {
