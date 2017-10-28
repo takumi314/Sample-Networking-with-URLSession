@@ -16,7 +16,7 @@ class SearchingService: NSObject {
     private var dataTask: URLSessionDataTask?
     private var tracks = [Track]()
     private var errorMessage = ""
-    private var api: SearchAPIConfiguration.API = SearchAPIConfiguration.api()
+    private var api: SearchAPIConfiguration.APIComponents = SearchAPIConfiguration.api()
 
     ///
     /// インスタンス生成時に URLSessionConfiguration と URLSession の依存性を与える.

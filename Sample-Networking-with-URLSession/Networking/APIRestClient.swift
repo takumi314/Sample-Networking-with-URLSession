@@ -34,60 +34,50 @@ protocol APIRequest {
 }
 
 class SearchAPIConfiguration {
-    typealias Host = String
-    typealias Method = String
-    typealias Terms = [String]
-    typealias Coutory = String
-    typealias Entity = String
-    typealias Attribute = String
-    typealias Lang = String
-    typealias RequestURL = (Host, Method, Terms?, Coutory?, Entity?, Attribute?, Lang?)
-
-    struct API {
-        let host: Host
-        let method: Method
-        var terms: Terms?
-        var countory: Coutory?
-        var entity: Entity?
-        var attribute: Attribute?
-        var lang: Lang?
+    struct APIComponents {
+        let host: String
+        let method: String
+        var terms: [String]
+        var country: String?
+        var entity: String?
+        var attribute: String?
+        var lang: String?
     }
 
-    static let api: () -> SearchAPIConfiguration.API
-        = { let c = SearchAPIConfiguration().requestURL
-            return API(host: c.0,
-                       method: c.1,
-                       terms: c.2,
-                       countory: c.3,
-                       entity: c.5,
-                       attribute: c.5,
-                       lang: c.6)
-        }
+    static let api: () -> SearchAPIConfiguration.APIComponents = {
+        return decode(from: path!)
+    }
 
     private static let path = Bundle.main.path(forResource: "iTunes", ofType: "plist")
-
-    private let requestURL: RequestURL
-    init() {
-        self.requestURL = SearchAPIConfiguration.decode(contentsOf: SearchAPIConfiguration.path!)
+    private static func decode(from path: String) -> APIComponents {
+        guard let dictionary = NSDictionary(contentsOfFile: path) else {
+            return APIComponents(host: "", method: "", terms: [], country: nil, entity: nil, attribute: nil, lang: nil)
+        }
+        return decode(values: dictionary)
     }
-
-    private static func decode(contentsOf path: String) -> RequestURL {
-        return decode(values: NSDictionary(contentsOfFile: path)!)
+    private static func decode(values dictionary: NSDictionary) -> APIComponents {
+        return APIComponents(host:      dictionary.value(forKey: "host",    to: String.self),
+                             method:    dictionary.value(forKey: "mathod",  to: String.self),
+                             terms:     dictionary.value(forKey: "terms",   to: [String].self),
+                             country:   dictionary.value(forKey: "country", to: String.self),
+                             entity:    dictionary.value(forKey: "entity",  to: String.self),
+                             attribute: dictionary.value(forKey: "attribute", to: String.self),
+                             lang:      dictionary.value(forKey: "lang",     to: String.self))
     }
-
-    private static func decode(values dictionary: NSDictionary) -> RequestURL {
-        let host        = dictionary.value(forKey: "host") as! String
-        let method      = dictionary.value(forKey: "method") as! String
-        let country     = dictionary.value(forKey: "country") as? String
-        let entity      = dictionary.value(forKey: "entity") as? String
-        let attribute   = dictionary.value(forKey: "attribute") as? String
-        let lang        = dictionary.value(forKey: "lang") as? String
-
-        return (host, method, [], country, entity, attribute, lang)
-    }
-
 }
 
+
+extension NSDictionary {
+    func value<T>(forKey key: String, to type: T.Type) -> T? {
+        guard let value = value(forKey: key) as? T else {
+            return nil
+        }
+        return value
+    }
+    func value<T>(forKey key: String, to type: T.Type) -> T {
+        return value(forKey: key) as! T
+    }
+}
 
 
 
