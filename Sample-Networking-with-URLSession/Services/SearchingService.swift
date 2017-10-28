@@ -32,7 +32,7 @@ class SearchingService: NSObject {
             return
         }
         // 1. searchTerm -> Query
-        let term = replace(with: searchTerm)
+        let term = convert(from: searchTerm)
         // 2. Query ->  URL
         urlComponents.query = "media=music&entity=song&term=\(term)"
         guard let url = urlComponents.url else {
@@ -58,12 +58,12 @@ class SearchingService: NSObject {
         }
     }
 
-    func replace(with term: String) -> String {
-        return term.components(separatedBy: CharacterSet.whitespaces).joined(separator: "+")
+    func fetchAllTracks() -> [Track] {
+        return tracks
     }
 
-    private func getParameterKeyValue(from value: String, index: Int) -> String {
-        return "&value\(index)="
+    func convert(from term: String) -> String {
+        return term.components(separatedBy: CharacterSet.whitespaces).joined(separator: "+")
     }
 
     func mapping(_ data: Data) {
@@ -75,6 +75,10 @@ class SearchingService: NSObject {
         }
     }
 
+    private func getParameterKeyValue(from value: String, index: Int) -> String {
+        return "&value\(index)="
+    }
+    
 }
 
 extension SearchingService: RestClient {

@@ -40,10 +40,10 @@ class Sample_Networking_with_URLSessionTests: XCTestCase {
         let jsonData = JsonProvider.getData()
 
         service.mapping(jsonData!)
-        print(service.tracks)
+        print(service.fetchAllTracks())
 
-        let track = service.tracks.first!
-        XCTAssertEqual(service.tracks.count, 25)
+        let track = service.fetchAllTracks().first!
+        XCTAssertEqual(service.fetchAllTracks().count, 25)
         XCTAssertEqual(track.name, "Better Together")
         XCTAssertEqual(track.artist, "Jack Johnson")
     }
@@ -68,7 +68,7 @@ class Sample_Networking_with_URLSessionTests: XCTestCase {
         let service = SearchingService(engine)
         let searchTerm = "one two three"
 
-        let term = service.replace(with: searchTerm)
+        let term = service.convert(from: searchTerm)
         XCTAssertEqual(term, "one+two+three")
     }
 
