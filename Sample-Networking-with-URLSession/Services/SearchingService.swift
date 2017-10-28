@@ -28,7 +28,8 @@ class SearchingService: NSObject {
 
     func getResult(searchTerm: String, completion: @escaping QueryResult) {
         guard var urlComponents = URLComponents(string: "https//hoge/api/") else {
-            completion(nil, "")
+            self.errorMessage += "URLComponents error:  invalid URL string" + "\n"
+            completion(nil, errorMessage)
             return
         }
         // 1. searchTerm -> Query
@@ -36,7 +37,8 @@ class SearchingService: NSObject {
         // 2. Query ->  URL
         urlComponents.query = "media=music&entity=song&term=\(term)"
         guard let url = urlComponents.url else {
-            completion(nil, "")
+            self.errorMessage += "URLComponents error: invalid URL.Query parameter" + "\n"
+            completion(nil, errorMessage)
             return
         }
         // 3. API request
@@ -71,7 +73,7 @@ class SearchingService: NSObject {
         do {
             self.tracks  = try JSONDecoder().decode(SearchResults.self, from: data).results
         } catch let parseError {
-            errorMessage += "json convert failed in JSONDecoder: \(parseError.localizedDescription)\n"
+            self.errorMessage += "json convert failed in JSONDecoder: \(parseError.localizedDescription)\n"
         }
     }
 
