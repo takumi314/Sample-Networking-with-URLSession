@@ -67,9 +67,6 @@ extension SearchViewController: UISearchBarDelegate {
         searchBar.resignFirstResponder()
     }
 
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        return true
-    }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         // Execution
         dismissKeyboard()
