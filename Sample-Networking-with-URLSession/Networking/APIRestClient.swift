@@ -89,23 +89,22 @@ class SearchAPIConfiguration {
         return term.components(separatedBy: CharacterSet.whitespaces).joined(separator: "+")
     }
 
-    private static func decode(from path: String) -> APIComponents {
-        guard let dictionary = NSDictionary(contentsOfFile: path) else {
-            return APIComponents(host: "", method: "", terms: [], country: nil, entity: nil, attribute: nil, lang: nil)
+    private static func decode(from path: URL) -> APIComponents {
+        var dictionary = [String: Any]()
+        if let dic = NSDictionary(contentsOf: path) {
+            dic.forEach {
+                guard let key = $0.key as? String else { return }
+                if key == "terms" {
+                    dictionary[key] = $0.value as! [String]
+                } else {
+                    dictionary[key] = $0.value as! String
+                }
+            }
         }
-        return decode(values: dictionary)
+        return APIComponents(values: NSDictionary(dictionary: dictionary))
     }
-    private static func decode(values dictionary: NSDictionary) -> APIComponents {
-        return APIComponents(host:      dictionary.value(forKey: "host",    to: String.self),
-                             method:    dictionary.value(forKey: "mathod",  to: String.self),
-                             terms:     dictionary.value(forKey: "terms",   to: [String].self),
-                             country:   dictionary.value(forKey: "country", to: String.self),
-                             entity:    dictionary.value(forKey: "entity",  to: String.self),
-                             attribute: dictionary.value(forKey: "attribute", to: String.self),
-                             lang:      dictionary.value(forKey: "lang",     to: String.self))
-    }
-}
 
+}
 
 extension NSDictionary {
     func value<T>(forKey key: String, to type: T.Type) -> T? {
@@ -118,9 +117,6 @@ extension NSDictionary {
         return value(forKey: key) as! T
     }
 }
-
-
-
 
 
 

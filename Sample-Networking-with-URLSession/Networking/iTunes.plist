@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>terms</key>
-	<string></string>
+	<array/>
 	<key>media</key>
 	<string>music</string>
 	<key>lang</key>
