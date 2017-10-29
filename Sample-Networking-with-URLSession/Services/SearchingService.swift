@@ -21,12 +21,12 @@ class SearchingService: NSObject {
     ///
     /// インスタンス生成時に URLSessionConfiguration と URLSession の依存性を与える.
     ///
-    init( _ session: NetworkEngine) {
+    init(_ session: NetworkEngine) {
         self.session = session
     }
 
     func getResult(searchTerm: String, completion: @escaping QueryResult) {
-        guard let url = SearchAPIConfiguration.convertToURL(with: searchTerm) else {
+        guard let url = SearchAPIConfiguration.url(searchingFor: searchTerm) else {
             self.errorMessage += "URLComponents error: invalid URL.Query parameter" + "\n"
             return
         }

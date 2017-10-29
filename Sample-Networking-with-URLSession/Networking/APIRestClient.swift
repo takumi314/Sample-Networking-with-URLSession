@@ -37,21 +37,32 @@ class SearchAPIConfiguration {
     typealias ErrorMessage = String
 
     struct APIComponents {
-        var host: String
-        var method: String
-        var terms: [String]?
-        var country: String?
-        var entity: String?
-        var attribute: String?
-        var lang: String?
-        var media: String?
+        var host: String        = ""
+        var method: String      = ""
+        var terms: [String]     = []
+        var country: String?    = nil
+        var entity: String?     = nil
+        var attribute: String?  = nil
+        var lang: String?       = nil
+        var media: String?      = nil
+
+        init(values dictionary: NSDictionary) {
+            self.host       =   dictionary.value(forKey: "host",        to: String.self)
+            self.method     =   dictionary.value(forKey: "method",      to: String.self)
+            self.terms      =   dictionary.value(forKey: "terms",       to: [String].self)
+            self.country    =   dictionary.value(forKey: "country",     to: String.self)
+            self.entity     =   dictionary.value(forKey: "entity",      to: String.self)
+            self.attribute  =   dictionary.value(forKey: "attribute",   to: String.self)
+            self.lang       =   dictionary.value(forKey: "lang",        to: String.self)
+            self.media      =   dictionary.value(forKey: "media",       to: String.self)
+        }
     }
 
     static var api: APIComponents {
         return decode(from: plistPath!)
     }
 
-    static func convertToURL(with searchTerm: String) -> URL? {
+    static func url(searchingFor searchTerm: String) -> URL? {
         let api = SearchAPIConfiguration.api
         guard var urlComponents = URLComponents(string: "\(api.host)/\(api.method)") else {
             print("URLComponents error:  invalid Host's URL " + "\n")
@@ -67,13 +78,12 @@ class SearchAPIConfiguration {
             print("URLComponents error: invalid URL.Query parameter" + "\n")
             return nil
         }
-        print(url)
         return url
     }
 
     // MARK: - Private
     
-    static let plistPath = Bundle(for: SearchAPIConfiguration.self).url(forResource: "iTunes", withExtension: "plist")
+    private static let plistPath = Bundle(for: SearchAPIConfiguration.self).url(forResource: "iTunes", withExtension: "plist")
 
     private static func convert(from term: String) -> String {
         return term.components(separatedBy: CharacterSet.whitespaces).joined(separator: "+")
