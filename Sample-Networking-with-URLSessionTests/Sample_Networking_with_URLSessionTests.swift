@@ -34,6 +34,18 @@ class Sample_Networking_with_URLSessionTests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
 
+    func testAPIURL() {
+        let term = "Happy Year 祝日 🍰"
+        let url = SearchAPIConfiguration.url(searchingFor: term)!
+        let string = "https://itunes.apple.com/search?media=music&entity=song&term=Happy+Year+祝日+🍰"
+        let encoded = string.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        let expectedURL = URL(string: encoded!)
+        print(url)
+        print(encoded!)
+
+        XCTAssertEqual(url, expectedURL)
+    }
+
     func testMapping() {
         let engine = NetworkEngineMock()
         let service = SearchingService(engine)
