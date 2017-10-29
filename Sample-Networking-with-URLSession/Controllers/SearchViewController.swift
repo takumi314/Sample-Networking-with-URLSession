@@ -10,10 +10,16 @@ import UIKit
 
 class SearchViewController: UIViewController {
 
+    // MARK: - IBOutlets
+
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
 
+    // MARK: - Private
+
     private var searchResults = [Track]()
+
+    // MARK: - Life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,9 +30,7 @@ class SearchViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
-
 
 }
 
@@ -95,10 +99,10 @@ extension SearchViewController: UISearchBarDelegate {
         // Validation
     }
     func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        // Validation
         return true
     }
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-
     }
     func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
         if searchBar.isFirstResponder {
