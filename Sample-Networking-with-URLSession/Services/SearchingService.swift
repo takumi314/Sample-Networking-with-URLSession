@@ -35,7 +35,7 @@ class SearchingService: NSObject {
             guard let `self` = self else { return }
             if let error = error {
                 self.errorMessage += "DataTask error: " + error.localizedDescription + "\n"
-                completion(nil, error as! String)
+                completion(nil, self.errorMessage)
             }
             if let data = data,
                 let response = response as? HTTPURLResponse,
