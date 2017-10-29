@@ -11,7 +11,7 @@
 		9E8804B16B8A05C323718062 /* Pods_Sample_Networking_with_URLSession.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BB02E557F95217F5C30988D /* Pods_Sample_Networking_with_URLSession.framework */; };
 		E12084001F965CF7000E63C5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12083FF1F965CF7000E63C5 /* AppDelegate.swift */; };
 		E12084021F965CF7000E63C5 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12084011F965CF7000E63C5 /* SearchViewController.swift */; };
-		E12084051F965CF7000E63C5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E12084031F965CF7000E63C5 /* Main.storyboard */; };
+		E12084051F965CF7000E63C5 /* Searching.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E12084031F965CF7000E63C5 /* Searching.storyboard */; };
 		E12084071F965CF7000E63C5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E12084061F965CF7000E63C5 /* Assets.xcassets */; };
 		E120840A1F965CF7000E63C5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E12084081F965CF7000E63C5 /* LaunchScreen.storyboard */; };
 		E12084151F965CF8000E63C5 /* Sample_Networking_with_URLSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12084141F965CF8000E63C5 /* Sample_Networking_with_URLSessionTests.swift */; };
@@ -47,7 +47,7 @@
 		E12083FC1F965CF7000E63C5 /* Sample-Networking-with-URLSession.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sample-Networking-with-URLSession.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E12083FF1F965CF7000E63C5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E12084011F965CF7000E63C5 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		E12084041F965CF7000E63C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E12084041F965CF7000E63C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Searching.storyboard; sourceTree = "<group>"; };
 		E12084061F965CF7000E63C5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E12084091F965CF7000E63C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E120840B1F965CF7000E63C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -126,9 +126,7 @@
 				E1611F681F9E444700DB8E95 /* Others */,
 				E1611F611F9E3C4100DB8E95 /* Networking */,
 				E120842A1F9D01C0000E63C5 /* Models */,
-				E12084031F965CF7000E63C5 /* Main.storyboard */,
 				E12084061F965CF7000E63C5 /* Assets.xcassets */,
-				E12084081F965CF7000E63C5 /* LaunchScreen.storyboard */,
 				E120840B1F965CF7000E63C5 /* Info.plist */,
 			);
 			path = "Sample-Networking-with-URLSession";
@@ -193,6 +191,8 @@
 			isa = PBXGroup;
 			children = (
 				E12084011F965CF7000E63C5 /* SearchViewController.swift */,
+				E12084031F965CF7000E63C5 /* Searching.storyboard */,
+				E12084081F965CF7000E63C5 /* LaunchScreen.storyboard */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -298,7 +298,7 @@
 				E120840A1F965CF7000E63C5 /* LaunchScreen.storyboard in Resources */,
 				E12084071F965CF7000E63C5 /* Assets.xcassets in Resources */,
 				E1611F711FA0D65000DB8E95 /* iTunes.plist in Resources */,
-				E12084051F965CF7000E63C5 /* Main.storyboard in Resources */,
+				E12084051F965CF7000E63C5 /* Searching.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,12 +453,12 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		E12084031F965CF7000E63C5 /* Main.storyboard */ = {
+		E12084031F965CF7000E63C5 /* Searching.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				E12084041F965CF7000E63C5 /* Base */,
 			);
-			name = Main.storyboard;
+			name = Searching.storyboard;
 			sourceTree = "<group>";
 		};
 		E12084081F965CF7000E63C5 /* LaunchScreen.storyboard */ = {
