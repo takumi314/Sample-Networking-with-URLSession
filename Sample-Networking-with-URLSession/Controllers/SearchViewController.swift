@@ -14,7 +14,6 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
 
     private var searchResults = [Track]()
-    private var searchingService: SearchingService?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,23 +71,23 @@ extension SearchViewController: UISearchBarDelegate {
         dismissKeyboard()
         if !searchBar.text!.isEmpty, let term = searchBar.text {
             UIApplication.shared.isNetworkActivityIndicatorVisible = true
-            self.searchingService = SearchingService(URLSession())
-            searchingService!.getResult(searchTerm: term) { [weak self] (results, error) in
-                guard let `self` = self else {
-                    return
-                }
-                if let results = results {
-                    self.searchResults = results
-                    self.tableView.reloadData()
-                    self.tableView.setContentOffset(CGPoint.zero, animated: false)
-                }
-                if !error.isEmpty {
-                    print("Search error occured: \(error)")
-                }
+            SearchingService(URLSession())
+                .getResult(searchTerm: term) { [weak self] (results, error) in
+                    guard let `self` = self else {
+                        return
+                    }
+                    if let results = results {
+                        self.searchResults = results
+                        self.tableView.reloadData()
+                        self.tableView.setContentOffset(CGPoint.zero, animated: false)
+                    }
+                    if !error.isEmpty {
+                        print("Search error occured: \(error)")
+                    }
             }
-
         }
     }
+
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         // Cancel
     }
