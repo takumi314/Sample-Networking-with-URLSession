@@ -20,7 +20,8 @@ protocol RestClient {
 
 extension RestClient {
     func request(with url: URL, delegate: URLSessionDelegate, _ completionHandler: @escaping RestClient.CompletionHandler) {
-        let config = URLSessionConfiguration.background(withIdentifier: "SeachingSessionConfiguration")
+        let config = URLSessionConfiguration.default
+//        let config = URLSessionConfiguration.background(withIdentifier: "SeachingSessionConfiguration")
         URLSession(configuration: config, delegate: delegate, delegateQueue: nil)
             .dataTask(with: url) { (data, response, error) in
                 completionHandler(data, response, error)
