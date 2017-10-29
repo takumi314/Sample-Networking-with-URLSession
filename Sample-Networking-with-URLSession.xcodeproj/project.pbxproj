@@ -25,6 +25,7 @@
 		E1611F6F1F9FA81100DB8E95 /* APIRestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1611F6E1F9FA81100DB8E95 /* APIRestClient.swift */; };
 		E1611F711FA0D65000DB8E95 /* iTunes.plist in Resources */ = {isa = PBXBuildFile; fileRef = E1611F701FA0D65000DB8E95 /* iTunes.plist */; };
 		E1611F731FA45B8700DB8E95 /* test.json in Resources */ = {isa = PBXBuildFile; fileRef = E1611F721FA45B8700DB8E95 /* test.json */; };
+		E1FD78F81FA5CBC600BAF642 /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FD78F71FA5CBC600BAF642 /* TrackCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		E1611F6E1F9FA81100DB8E95 /* APIRestClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRestClient.swift; sourceTree = "<group>"; };
 		E1611F701FA0D65000DB8E95 /* iTunes.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = iTunes.plist; sourceTree = "<group>"; };
 		E1611F721FA45B8700DB8E95 /* test.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = test.json; sourceTree = "<group>"; };
+		E1FD78F71FA5CBC600BAF642 /* TrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +185,7 @@
 		E1FD78F51FA5C23000BAF642 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E1FD78F71FA5CBC600BAF642 /* TrackCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -426,6 +429,7 @@
 				E120842C1F9D0215000E63C5 /* Download.swift in Sources */,
 				E1611F6F1F9FA81100DB8E95 /* APIRestClient.swift in Sources */,
 				E1611F671F9E3C4100DB8E95 /* NetworkEngine.swift in Sources */,
+				E1FD78F81FA5CBC600BAF642 /* TrackCell.swift in Sources */,
 				E1611F661F9E3C4100DB8E95 /* Downloader.swift in Sources */,
 				E12084021F965CF7000E63C5 /* SearchViewController.swift in Sources */,
 				E12084001F965CF7000E63C5 /* AppDelegate.swift in Sources */,
