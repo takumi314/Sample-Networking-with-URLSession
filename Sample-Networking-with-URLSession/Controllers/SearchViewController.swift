@@ -14,9 +14,11 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
 
     private var searchResults = [Track]()
+    private var searchingService: SearchingService?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar.delegate = self
         tableView.dataSource = self
         tableView.delegate = self
     }
@@ -52,6 +54,11 @@ extension SearchViewController: UITableViewDelegate {
 }
 
 extension SearchViewController: UISearchBarDelegate {
+
+    func dismissKeyboard() {
+        searchBar.resignFirstResponder()
+    }
+
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         if !searchBar.isFirstResponder {
             searchBar.becomeFirstResponder()
@@ -60,6 +67,25 @@ extension SearchViewController: UISearchBarDelegate {
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         // Execution
+        dismissKeyboard()
+        if !searchBar.text!.isEmpty, let term = searchBar.text {
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
+            self.searchingService = SearchingService(URLSession())
+            searchingService!.getResult(searchTerm: term) { [weak self] (results, error) in
+                guard let `self` = self else {
+                    return
+                }
+                if let results = results {
+                    self.searchResults = results
+                    self.tableView.reloadData()
+                    self.tableView.setContentOffset(CGPoint.zero, animated: false)
+                }
+                if !error.isEmpty {
+                    print("Search error occured: \(error)")
+                }
+            }
+
+        }
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         // Cancel
