@@ -60,9 +60,6 @@ extension SearchViewController: UISearchBarDelegate {
     }
 
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        if !searchBar.isFirstResponder {
-            searchBar.becomeFirstResponder()
-        }
         return true
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
