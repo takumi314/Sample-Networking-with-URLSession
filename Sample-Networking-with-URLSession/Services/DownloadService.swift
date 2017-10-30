@@ -12,7 +12,7 @@ import Foundation
 // Allows cancel, pause, resume download.
 class DownloadService {
 
-    private let downloader = Downloader(URLSession())
+    private let downloader = Downloader(URLSession(configuration: URLSessionConfiguration.default))
 
     var activeDownloads = [URL: Download]()
 

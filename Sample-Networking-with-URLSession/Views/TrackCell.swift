@@ -30,6 +30,8 @@ class TrackCell: UITableViewCell {
         titleLabel.text = track.name
         artistLabel.text = track.artist
 
+        actions()
+
         // Download controls are Pause/Resume, Cancel buttons, progress info
         var showDownloadControls = false
         if let download = download {
@@ -48,7 +50,7 @@ class TrackCell: UITableViewCell {
         downloadButton.isHidden = showDownloadControls || downloaded
     }
 
-    func asctions() -> () {
+    func actions() -> () {
         // Button actions
         pauseButton.onTap { [unowned self] in
             guard let text = self.pauseButton.titleLabel?.text else {
