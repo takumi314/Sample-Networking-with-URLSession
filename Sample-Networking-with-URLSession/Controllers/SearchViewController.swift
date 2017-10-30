@@ -52,6 +52,32 @@ extension SearchViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: TrackCell  = tableView.dequeueReusableCell(withIdentifier: "trackCell", for: indexPath) as! TrackCell
+        
+        cell.pauseTappedHandler = { [unowned self] cell in
+            if let indexPath = self.tableView.indexPath(for: cell) {
+                self.downloadService.pauseDownload(self.searchResults[indexPath.row])
+                self.tableView.reloadData()
+            }
+        }
+        cell.cancelTappedHandler = { cell in
+            if let indexPath = self.tableView.indexPath(for: cell) {
+                self.downloadService.cancelDownload(self.searchResults[indexPath.row])
+                self.tableView.reloadData()
+            }
+        }
+        cell.downloadTappedHandler = { cell in
+            if let indexPath = self.tableView.indexPath(for: cell) {
+                self.downloadService.startDownload(self.searchResults[indexPath.row])
+                self.tableView.reloadData()
+            }
+        }
+        cell.resumeTappedHandler = { cell in
+            if let indexPath = self.tableView.indexPath(for: cell) {
+                self.downloadService.resumeDownload(self.searchResults[indexPath.row])
+                self.tableView.reloadData()
+            }
+        }
+
         let track = searchResults[indexPath.row]
         cell.configure(track: track, downloaded: track.downloaded, download: downloadService.activeDownloads[track.previewURL])
 
