@@ -11,13 +11,10 @@ import Foundation
 // Downloads song snippets, and stores in local file.
 // Allows cancel, pause, resume download.
 class DownloadService {
-    private let downloader: Downloader
 
-    private var activeDownloads = [URL: Download]()
+    private let downloader = Downloader(URLSession(configuration: URLSessionConfiguration.default))
 
-    init( _ donwloader: Downloader) {
-        self.downloader = donwloader
-    }
+    var activeDownloads = [URL: Download]()
 
     func startDownload(_ track: Track) {
         var download = Download(track: track)

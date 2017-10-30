@@ -19,6 +19,8 @@ class SearchViewController: UIViewController {
 
     private var searchResults = [Track]()
 
+    private let downloadService = DownloadService()
+
     // MARK: - Life cycle
 
     override func viewDidLoad() {
@@ -50,11 +52,42 @@ extension SearchViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: TrackCell  = tableView.dequeueReusableCell(withIdentifier: "trackCell", for: indexPath) as! TrackCell
-        cell.configure(track: searchResults[indexPath.row])
+        
+        cell.pauseTappedHandler = { [unowned self] cell in
+            if let indexPath = self.tableView.indexPath(for: cell) {
+                self.downloadService.pauseDownload(self.searchResults[indexPath.row])
+                self.reload(indexPath.row)
+            }
+        }
+        cell.cancelTappedHandler = { cell in
+            if let indexPath = self.tableView.indexPath(for: cell) {
+                self.downloadService.cancelDownload(self.searchResults[indexPath.row])
+                self.reload(indexPath.row)
+            }
+        }
+        cell.downloadTappedHandler = { cell in
+            if let indexPath = self.tableView.indexPath(for: cell) {
+                self.downloadService.startDownload(self.searchResults[indexPath.row])
+                self.reload(indexPath.row)
+            }
+        }
+        cell.resumeTappedHandler = { cell in
+            if let indexPath = self.tableView.indexPath(for: cell) {
+                self.downloadService.resumeDownload(self.searchResults[indexPath.row])
+                self.reload(indexPath.row)
+            }
+        }
+
+        let track = searchResults[indexPath.row]
+        cell.configure(track: track, downloaded: track.downloaded, download: downloadService.activeDownloads[track.previewURL])
 
         return cell
     }
 
+    // Update track cell's buttons
+    func reload(_ row: Int) {
+        tableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: .none)
+    }
 }
 
 extension SearchViewController: UITableViewDelegate {
