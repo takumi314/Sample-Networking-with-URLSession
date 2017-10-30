@@ -26,9 +26,26 @@ class TrackCell: UITableViewCell {
     @IBOutlet weak var downloadButton: UIButton!
 
 
-    func configure(track: Track) {
+    func configure(track: Track, downloaded: Bool, download: Download?) {
         titleLabel.text = track.name
         artistLabel.text = track.artist
+
+        // Download controls are Pause/Resume, Cancel buttons, progress info
+        var showDownloadControls = false
+        if let download = download {
+            showDownloadControls = true
+            let title = download.isDownloading ? "Pause" : "Resume"
+            pauseButton.setTitle(title, for: .normal)
+            progressLabel.text = download.isDownloading ? "Downloading ..." : "Paused"
+        }
+
+        progressLabel.isHidden = !showDownloadControls
+        progressView.isHidden  = !showDownloadControls
+        cancelButton.isHidden  = !showDownloadControls
+        pauseButton.isHidden   = !showDownloadControls
+
+        selectionStyle = downloaded ? UITableViewCellSelectionStyle.gray : .none
+        downloadButton.isHidden = showDownloadControls || downloaded
     }
 
     func asctions() -> () {

@@ -19,6 +19,8 @@ class SearchViewController: UIViewController {
 
     private var searchResults = [Track]()
 
+    private let downloadService = DownloadService()
+
     // MARK: - Life cycle
 
     override func viewDidLoad() {
@@ -50,7 +52,8 @@ extension SearchViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: TrackCell  = tableView.dequeueReusableCell(withIdentifier: "trackCell", for: indexPath) as! TrackCell
-        cell.configure(track: searchResults[indexPath.row])
+        let track = searchResults[indexPath.row]
+        cell.configure(track: track, downloaded: track.downloaded, download: downloadService.activeDownloads[track.previewURL])
 
         return cell
     }
