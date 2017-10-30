@@ -7,8 +7,15 @@
 //
 
 import UIKit
+import Closures
 
 class TrackCell: UITableViewCell {
+    typealias ActionHandler = (TrackCell) -> ()
+
+    var pauseTappedHandler: ActionHandler?
+    var resumeTappedHandler: ActionHandler?
+    var cancelTappedHandler: ActionHandler?
+    var downloadTappedHandler:ActionHandler?
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var artistLabel: UILabel!
@@ -22,6 +29,10 @@ class TrackCell: UITableViewCell {
     func configure(track: Track) {
         titleLabel.text = track.name
         artistLabel.text = track.artist
+    }
+
+    func asctions() -> () {
+        // Button actions
     }
 
 }
