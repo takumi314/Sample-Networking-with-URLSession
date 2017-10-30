@@ -33,6 +33,30 @@ class TrackCell: UITableViewCell {
 
     func asctions() -> () {
         // Button actions
+        pauseButton.onTap { [unowned self] in
+            guard let text = self.pauseButton.titleLabel?.text else {
+                return
+            }
+            if text == "Pause" {
+                if let handler = self.pauseTappedHandler {
+                    handler(self)
+                }
+            } else {
+                if let handler = self.resumeTappedHandler {
+                    handler(self)
+                }
+            }
+        }
+        cancelButton.onTap { [unowned self] in
+            if let handler = self.cancelTappedHandler {
+                handler(self)
+            }
+        }
+        downloadButton.onTap { [unowned self] in
+            if let handler = self.downloadTappedHandler {
+                handler(self)
+            }
+        }
     }
 
 }
