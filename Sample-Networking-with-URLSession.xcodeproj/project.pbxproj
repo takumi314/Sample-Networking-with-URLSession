@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2F199B16041FCBA978D41223 /* Pods_Sample_Networking_with_URLSessionTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AE6902B9ADB3DCE8F3F7EDB /* Pods_Sample_Networking_with_URLSessionTests.framework */; };
 		9E8804B16B8A05C323718062 /* Pods_Sample_Networking_with_URLSession.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BB02E557F95217F5C30988D /* Pods_Sample_Networking_with_URLSession.framework */; };
+		E12078A01FA8CDC9001C155A /* DownloadTaskStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E120789F1FA8CDC9001C155A /* DownloadTaskStore.swift */; };
 		E12084001F965CF7000E63C5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12083FF1F965CF7000E63C5 /* AppDelegate.swift */; };
 		E12084021F965CF7000E63C5 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12084011F965CF7000E63C5 /* SearchViewController.swift */; };
 		E12084051F965CF7000E63C5 /* Searching.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E12084031F965CF7000E63C5 /* Searching.storyboard */; };
@@ -45,6 +46,7 @@
 		6AE6902B9ADB3DCE8F3F7EDB /* Pods_Sample_Networking_with_URLSessionTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sample_Networking_with_URLSessionTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		90F882D9534ABD6820F61B64 /* Pods-Sample-Networking-with-URLSessionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample-Networking-with-URLSessionTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Sample-Networking-with-URLSessionTests/Pods-Sample-Networking-with-URLSessionTests.release.xcconfig"; sourceTree = "<group>"; };
 		CD267E5568950E3479AF6506 /* Pods-Sample-Networking-with-URLSession.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample-Networking-with-URLSession.release.xcconfig"; path = "Pods/Target Support Files/Pods-Sample-Networking-with-URLSession/Pods-Sample-Networking-with-URLSession.release.xcconfig"; sourceTree = "<group>"; };
+		E120789F1FA8CDC9001C155A /* DownloadTaskStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadTaskStore.swift; sourceTree = "<group>"; };
 		E12083FC1F965CF7000E63C5 /* Sample-Networking-with-URLSession.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sample-Networking-with-URLSession.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E12083FF1F965CF7000E63C5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E12084011F965CF7000E63C5 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -99,6 +101,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		E120789E1FA8CC8D001C155A /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				E120789F1FA8CDC9001C155A /* DownloadTaskStore.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
 		E12083F31F965CF7000E63C5 = {
 			isa = PBXGroup;
 			children = (
@@ -122,6 +132,7 @@
 		E12083FE1F965CF7000E63C5 /* Sample-Networking-with-URLSession */ = {
 			isa = PBXGroup;
 			children = (
+				E120789E1FA8CC8D001C155A /* Library */,
 				E1FD78F61FA5C2DA00BAF642 /* Controllers */,
 				E1FD78F51FA5C23000BAF642 /* Views */,
 				E1611F691F9E466100DB8E95 /* Services */,
@@ -429,6 +440,7 @@
 			files = (
 				E1611F651F9E3C4100DB8E95 /* DataLoader.swift in Sources */,
 				E1611F6B1F9E46B500DB8E95 /* DownloadService.swift in Sources */,
+				E12078A01FA8CDC9001C155A /* DownloadTaskStore.swift in Sources */,
 				E120842C1F9D0215000E63C5 /* Download.swift in Sources */,
 				E1611F6F1F9FA81100DB8E95 /* APIRestClient.swift in Sources */,
 				E1611F671F9E3C4100DB8E95 /* NetworkEngine.swift in Sources */,
