@@ -30,7 +30,7 @@ class Downloader: NSObject {
         }
     }
 
-    var delegate: DownloaderDelegate?
+    private var delegate: DownloaderDelegate?
 
     private let engine: NetworkEngine
 
