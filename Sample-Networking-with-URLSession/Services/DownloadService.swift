@@ -75,6 +75,8 @@ class DownloadService {
         }
     }
 
+    // MARK: - Privates
+
     private func storedTrack(of download: Download, downloadedTo location: URL ) -> Bool {
         guard let sourceUrl = requestURL(of: download) else {
             return false
