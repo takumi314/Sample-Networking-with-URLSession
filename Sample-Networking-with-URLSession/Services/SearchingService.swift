@@ -57,13 +57,25 @@ class SearchingService: NSObject {
         return term.components(separatedBy: CharacterSet.whitespaces).joined(separator: "+")
     }
 
-    func mapping(_ data: Data) {
+    private func mapping(_ data: Data) {
         tracks.removeAll()
         do {
-            self.tracks  = try JSONDecoder().decode(SearchResults.self, from: data).results
+            let tracks = try JSONDecoder().decode(SearchResults.self, from: data).results
+            self.tracks = numbering(for: tracks)
         } catch let parseError {
             self.errorMessage += "json convert failed in JSONDecoder: \(parseError.localizedDescription)\n"
         }
+    }
+
+    private func numbering(for tracks: [Track]) -> [Track] {
+        return tracks
+                .enumerated()
+                .map {
+                    return Track(name: $0.element.name,
+                                 artist: $0.element.artist,
+                                 previewURL: $0.element.previewURL,
+                                 index: $0.offset)
+                }
     }
 
     private func getParameterKeyValue(from value: String, index: Int) -> String {
