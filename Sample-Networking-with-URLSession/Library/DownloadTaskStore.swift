@@ -12,29 +12,48 @@ class DownloadTaskStore {
 
     private let manager: FileManager
 
-    //
-    // Download source path
-    //
+    ///
+    /// API request URL
+    ///
+    private let sourceURL: URL
+
+    ///
+    /// A temporary path in which the track will be
+    ///
     private let tempPath: URL
 
-    private let sourceURL: URL
+    ///
+    /// Finally, a path in which the track will be stored
+    ///
+    private var destinationPath: URL?
 
     init(_ manager: FileManager,from sourceURL: URL , downloadingTo tempPath: URL) {
         self.manager = manager
         self.sourceURL = sourceURL
         self.tempPath = tempPath
+        self.destinationPath = localPath(for: sourceURL)
     }
 
     ///
     /// Copy download task in Temp into DocumentDirectory
     ///
-    func copy(to url: URL) -> Bool {
-        guard clearPath(as: url) || isAvailablePath(url: url) else {
+    func copy() -> Bool {
+        guard let dest = destinationPath else {
             return false
         }
-        let url = localPath(for: sourceURL)
+        return copy(to: dest)
+    }
+
+    func copy(to url: URL) -> Bool {
+        return copy(at: tempPath, to: url)
+    }
+
+    private func copy(at source: URL, to destination: URL) -> Bool {
+        guard clearPath(as: destination) || isAvailablePath(url: destination) else {
+            return false
+        }
         do {
-            try manager.copyItem(at: tempPath, to: url)
+            try manager.copyItem(at: source, to: destination)
         } catch let error {
             print("Could not copy file to disk: \(error.localizedDescription)")
             return false

@@ -21,34 +21,22 @@ class DownloadService {
     var delegate: DownloadServiceDelegate?
     var activeDownloads = [URL: Download]()
 
-    func source(of download: Download) -> URL? {
-        guard let sourceUrl = download.task?.originalRequest?.url else {
-            return .none
-        }
-        return sourceUrl
-    }
-
     func startDownload(_ track: Track) {
         var download = Download(track: track)
         download.task = downloader.load(from: track.previewURL, delegate: self) { [weak self] result in
+            guard let `self` = self else {
+                return
+            }
             switch result {
             case .error(let error):
                 print("could not download: \(error.localizedDescription)")
                 return
             case .data(let location):
-                do {
-                    if let sourceUrl = self?.source(of: download) {
-                        self?.activeDownloads[sourceUrl] = nil
-                        let store = DownloadTaskStore(FileManager.default, from: sourceUrl, downloadingTo: location)
-                        let destinationUrl = store.localPath(for: sourceUrl)
+                if self.storedTrack(of: download, downloadedTo: location) {
+                    download.track.downloaded = true
 
-                        if store.copy(to: destinationUrl) {
-                                download.track.downloaded = true
-
-                                // 画面更新のために通知
-                                self?.delegate?.didFinish(self!, download: download)
-                        }
-                    }
+                    // For refreshing a view
+                    self.delegate?.didFinish(self, download: download)
                 }
                 break
             }
@@ -87,8 +75,21 @@ class DownloadService {
         }
     }
 
-    private func stored(track: Track, at url: URL) -> Bool {
-        return true
+    private func storedTrack(of download: Download, downloadedTo location: URL ) -> Bool {
+        guard let sourceUrl = requestURL(of: download) else {
+            return false
+        }
+        activeDownloads[sourceUrl] = nil
+        let store = DownloadTaskStore(FileManager.default, from: sourceUrl, downloadingTo: location)
+
+        return store.copy()
+    }
+
+    private func requestURL(of download: Download) -> URL? {
+        guard let sourceUrl = download.task?.originalRequest?.url else {
+            return .none
+        }
+        return sourceUrl
     }
 
 }
@@ -105,7 +106,7 @@ extension DownloadService: DownloaderDelegate {
         let destinationUrl = store.localPath(for: sourceUrl)
         print(destinationUrl)
 
-        if store.copy(to: destinationUrl) {
+        if store.copy() {
             download?.track.downloaded = true
 
             // 画面更新のために通知
