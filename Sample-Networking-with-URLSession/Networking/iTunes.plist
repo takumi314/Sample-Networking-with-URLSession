@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>terms</key>
+	<array/>
+	<key>media</key>
+	<string>music</string>
+	<key>lang</key>
+	<string>ja_jp</string>
+	<key>attribute</key>
+	<string></string>
+	<key>entity</key>
+	<string>song</string>
+	<key>country</key>
+	<string>jp</string>
+	<key>method</key>
+	<string>search</string>
+	<key>host</key>
+	<string>https://itunes.apple.com</string>
+</dict>
+</plist>

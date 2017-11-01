@@ -6,7 +6,7 @@ target 'Sample-Networking-with-URLSession' do
   use_frameworks!
 
   # Pods for Sample-Networking-with-URLSession
-    
+  pod 'Closures'
 
 
   target 'Sample-Networking-with-URLSessionTests' do
