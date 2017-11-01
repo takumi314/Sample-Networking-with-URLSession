@@ -32,10 +32,14 @@ extension URLSession: NetworkEngine {
         return task
     }
     func performDownload(with resumeData: Data) -> URLSessionDownloadTask {
-        return downloadTask(withResumeData: resumeData)
+        let task = downloadTask(withResumeData: resumeData)
+        task.resume()
+        return task
     }
     func performDownload(with url: URL) -> URLSessionDownloadTask {
-        return downloadTask(with: url)
+        let task = downloadTask(with: url)
+        task.resume()
+        return task
     }
 }
 

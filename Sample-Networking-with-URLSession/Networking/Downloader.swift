@@ -8,7 +8,11 @@
 
 import Foundation
 
-class Downloader {
+protocol DownloaderDelegate {
+    func didFinish(downloader: Downloader, downloadTask: URLSessionDownloadTask, downloadingTo  locaion: URL)
+}
+
+class Downloader: NSObject {
 
     enum Result: Equatable {
         case data(URL)
@@ -26,13 +30,16 @@ class Downloader {
         }
     }
 
+    var delegate: DownloaderDelegate?
+
     private let engine: NetworkEngine
 
     init(_ engine: NetworkEngine) {
         self.engine = engine
     }
 
-    func load(from url: URL, completionHadler: @escaping (Result) -> Void) -> URLSessionDownloadTask {
+    func load(from url: URL, delegate: DownloaderDelegate?, completionHadler: @escaping (Result) -> Void) -> URLSessionDownloadTask {
+        self.delegate = delegate
         return engine.performDownload(for: url) { (url, response, error) in
             if let error = error {
                 return completionHadler(.error(error))
@@ -42,43 +49,40 @@ class Downloader {
                 let error = CocoaError.error(.fileReadUnknown, userInfo: nil, url: nil)
                 return completionHadler(.error(error))
             }
-            // コピー元
-//            guard FileManager.default.isReadableFile(atPath: url.absoluteString) else {
-//                let error = CocoaError.error(.fileReadUnknown, userInfo: nil, url: nil)
-//                return completionHadler(.error(error))
-//            }
-//
-            // A path to save the download's data
-//            let path = URL(fileURLWithPath: "")
-//
-//            var destValid: ObjCBool = false
-//            FileManager.default.fileExists(atPath: path.absoluteString, isDirectory: &destValid)
-
-            // 保存用のディレクトリ作成
-//            if !destValid.boolValue {
-//                do {
-//                    try FileManager.default.createDirectory(at: path, withIntermediateDirectories: false, attributes: nil)
-//                } catch let error {
-//                    return completionHadler(.error(error))
-//                }
-//            }
-
-            // ダウンロードデータを永続化する
-//            do {
-//                try FileManager.default.copyItem(at: url, to: path)
-//            } catch let error {
-//                return completionHadler(.error(error))
-//            }
-
             completionHadler(.data(url))
         }
     }
 
-    func load(with resumeData: Data) -> URLSessionDownloadTask {
+    func load(with resumeData: Data, delegate: DownloaderDelegate) -> URLSessionDownloadTask {
+        self.delegate = delegate
         return engine.performDownload(with: resumeData)
     }
-    func load(from url: URL) -> URLSessionDownloadTask {
+    func load(from url: URL, delegate: DownloaderDelegate) -> URLSessionDownloadTask {
+        self.delegate = delegate
         return engine.performDownload(with: url)
     }
 
+}
+
+extension Downloader: URLSessionDownloadDelegate {
+
+    //
+    // Stores downloaded file
+    //
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        if let delegate = self.delegate {
+            delegate.didFinish(downloader: self, downloadTask: downloadTask, downloadingTo: location)
+        }
+    }
+
+    //
+    // Updates progress info
+    //
+    func urlSession(_ session: URLSession,
+                    downloadTask: URLSessionDownloadTask,
+                    didWriteData bytesWritten: Int64,
+                    totalBytesWritten: Int64,
+                    totalBytesExpectedToWrite: Int64) {
+        //
+    }
 }

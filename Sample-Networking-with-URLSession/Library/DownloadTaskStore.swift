@@ -11,10 +11,17 @@ import Foundation
 class DownloadTaskStore {
 
     private let manager: FileManager
+
+    //
+    // Download source path
+    //
     private let tempPath: URL
 
-    init(_ manager: FileManager, at tempPath: URL) {
+    private let sourceURL: URL
+
+    init(_ manager: FileManager,from sourceURL: URL , downloadingTo tempPath: URL) {
         self.manager = manager
+        self.sourceURL = sourceURL
         self.tempPath = tempPath
     }
 
@@ -25,6 +32,7 @@ class DownloadTaskStore {
         guard clearPath(as: url) || isAvailablePath(url: url) else {
             return false
         }
+        let url = localPath(for: sourceURL)
         do {
             try manager.copyItem(at: tempPath, to: url)
         } catch let error {

@@ -67,12 +67,14 @@ extension SearchViewController: UITableViewDataSource {
         }
         cell.downloadTappedHandler = { cell in
             if let indexPath = self.tableView.indexPath(for: cell) {
+                self.downloadService.delegate = self
                 self.downloadService.startDownload(self.searchResults[indexPath.row])
                 self.reload(indexPath.row)
             }
         }
         cell.resumeTappedHandler = { cell in
             if let indexPath = self.tableView.indexPath(for: cell) {
+                self.downloadService.delegate = self
                 self.downloadService.resumeDownload(self.searchResults[indexPath.row])
                 self.reload(indexPath.row)
             }
@@ -87,6 +89,17 @@ extension SearchViewController: UITableViewDataSource {
     // Update track cell's buttons
     func reload(_ row: Int) {
         tableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: .none)
+    }
+}
+
+extension SearchViewController: DownloadServiceDelegate {
+    func didFinish(_ service: DownloadService, download: Download) {
+        // Update the cell
+        if let index = download.track.index {
+            DispatchQueue.main.async { [weak self] in
+                self?.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+            }
+        }
     }
 }
 
