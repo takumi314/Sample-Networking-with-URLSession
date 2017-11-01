@@ -83,7 +83,6 @@ class DownloadService {
             } else {
                 download.task = downloader.load(from: download.track.previewURL, delegate: self)
             }
-            download.task!.resume()
             download.isDownloading = true
         }
     }
