@@ -32,6 +32,7 @@ class DownloadService {
                 print("could not download: \(error.localizedDescription)")
                 return
             case .data(let location):
+                print("TemporatyPath: \(location)")
                 if self.storedTrack(of: download, downloadedTo: location) {
                     download.track.downloaded = true
 
