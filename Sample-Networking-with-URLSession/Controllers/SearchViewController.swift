@@ -7,15 +7,16 @@
 //
 
 import UIKit
+import AVKit
 
 class SearchViewController: UIViewController {
 
     // MARK: - IBOutlets
 
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var searchBar: UISearchBar!
+    @IBOutlet private weak var tableView: UITableView!
 
-    // MARK: - Private
+    // MARK: - Private properties
 
     private var searchResults = [Track]()
 
@@ -96,6 +97,7 @@ extension SearchViewController: DownloadServiceDelegate {
     func didFinish(_ service: DownloadService, download: Download) {
         // Update the cell
         if let index = download.track.index {
+            searchResults[index].downloaded = true
             DispatchQueue.main.async { [weak self] in
                 self?.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
             }
@@ -104,7 +106,14 @@ extension SearchViewController: DownloadServiceDelegate {
 }
 
 extension SearchViewController: UITableViewDelegate {
-
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // cell tapped by indexPath.row
+        let track = searchResults[indexPath.row]
+        if track.downloaded {
+            AVPlayingService(track: track, parent: self).play()
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
 
 extension SearchViewController: UISearchBarDelegate {

@@ -40,6 +40,7 @@ class Downloader: NSObject {
 
     func load(from url: URL, delegate: DownloaderDelegate?, completionHadler: @escaping (Result) -> Void) -> URLSessionDownloadTask {
         self.delegate = delegate
+        print("RequestURL: \(url)")
         return engine.performDownload(for: url) { (url, response, error) in
             if let error = error {
                 return completionHadler(.error(error))
