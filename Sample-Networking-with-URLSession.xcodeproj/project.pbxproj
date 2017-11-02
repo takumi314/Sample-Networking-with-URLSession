@@ -27,6 +27,7 @@
 		E1611F711FA0D65000DB8E95 /* iTunes.plist in Resources */ = {isa = PBXBuildFile; fileRef = E1611F701FA0D65000DB8E95 /* iTunes.plist */; };
 		E1611F731FA45B8700DB8E95 /* test.json in Resources */ = {isa = PBXBuildFile; fileRef = E1611F721FA45B8700DB8E95 /* test.json */; };
 		E1E808061FAB7D7A00B0E3A9 /* AVPlayingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E808051FAB7D7A00B0E3A9 /* AVPlayingService.swift */; };
+		E1E808081FAB81A200B0E3A9 /* AVPlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E808071FAB81A200B0E3A9 /* AVPlayerTests.swift */; };
 		E1FD78F81FA5CBC600BAF642 /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FD78F71FA5CBC600BAF642 /* TrackCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +70,7 @@
 		E1611F701FA0D65000DB8E95 /* iTunes.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = iTunes.plist; sourceTree = "<group>"; };
 		E1611F721FA45B8700DB8E95 /* test.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = test.json; sourceTree = "<group>"; };
 		E1E808051FAB7D7A00B0E3A9 /* AVPlayingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayingService.swift; sourceTree = "<group>"; };
+		E1E808071FAB81A200B0E3A9 /* AVPlayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerTests.swift; sourceTree = "<group>"; };
 		E1FD78F71FA5CBC600BAF642 /* TrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -150,6 +152,7 @@
 		E12084131F965CF8000E63C5 /* Sample-Networking-with-URLSessionTests */ = {
 			isa = PBXGroup;
 			children = (
+				E1E808071FAB81A200B0E3A9 /* AVPlayerTests.swift */,
 				E1611F721FA45B8700DB8E95 /* test.json */,
 				E12084141F965CF8000E63C5 /* Sample_Networking_with_URLSessionTests.swift */,
 				E12084161F965CF8000E63C5 /* Info.plist */,
@@ -462,6 +465,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E12084151F965CF8000E63C5 /* Sample_Networking_with_URLSessionTests.swift in Sources */,
+				E1E808081FAB81A200B0E3A9 /* AVPlayerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
