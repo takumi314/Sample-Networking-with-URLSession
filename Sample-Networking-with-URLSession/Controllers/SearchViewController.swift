@@ -13,10 +13,10 @@ class SearchViewController: UIViewController {
 
     // MARK: - IBOutlets
 
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var searchBar: UISearchBar!
+    @IBOutlet private weak var tableView: UITableView!
 
-    // MARK: - Private
+    // MARK: - Private properties
 
     private var searchResults = [Track]()
 
