@@ -41,6 +41,7 @@ class DownloadTaskStore {
         guard let dest = destinationPath else {
             return false
         }
+        print("DestinationPath: \(dest)")
         return copy(to: dest)
     }
 
