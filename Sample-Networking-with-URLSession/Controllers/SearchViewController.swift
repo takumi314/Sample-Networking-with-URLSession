@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVKit
 
 class SearchViewController: UIViewController {
 
@@ -33,6 +34,33 @@ class SearchViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+
+}
+
+extension SearchViewController {
+
+    func showPlayer(_ track: Track) {
+        let vc = AVPlayerViewController()
+        if #available(iOS 11.0, *) {
+            vc.entersFullScreenWhenPlaybackBegins = true
+            vc.exitsFullScreenWhenPlaybackEnds = true
+        } else {
+            // Fallback on earlier versions
+        }
+        vc.allowsPictureInPicturePlayback = true
+        
+
+        present(vc, animated: true, completion: nil)
+        vc.player = player(track)
+        vc.player?.play()
+    }
+
+    func player(_ track: Track) -> AVPlayer {
+        let url = DownloadTaskStore.localPath(for: track.previewURL)
+        let player = AVPlayer(url: url)
+        return player
+    }
+
 
 }
 
@@ -96,6 +124,7 @@ extension SearchViewController: DownloadServiceDelegate {
     func didFinish(_ service: DownloadService, download: Download) {
         // Update the cell
         if let index = download.track.index {
+            searchResults[index].downloaded = true
             DispatchQueue.main.async { [weak self] in
                 self?.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
             }
@@ -104,7 +133,14 @@ extension SearchViewController: DownloadServiceDelegate {
 }
 
 extension SearchViewController: UITableViewDelegate {
-
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // cell tapped by indexPath.row
+        let track = searchResults[indexPath.row]
+        if track.downloaded {
+            self.showPlayer(track)
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
 
 extension SearchViewController: UISearchBarDelegate {
