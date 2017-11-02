@@ -26,6 +26,7 @@
 		E1611F6F1F9FA81100DB8E95 /* APIRestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1611F6E1F9FA81100DB8E95 /* APIRestClient.swift */; };
 		E1611F711FA0D65000DB8E95 /* iTunes.plist in Resources */ = {isa = PBXBuildFile; fileRef = E1611F701FA0D65000DB8E95 /* iTunes.plist */; };
 		E1611F731FA45B8700DB8E95 /* test.json in Resources */ = {isa = PBXBuildFile; fileRef = E1611F721FA45B8700DB8E95 /* test.json */; };
+		E1E808061FAB7D7A00B0E3A9 /* AVPlayingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E808051FAB7D7A00B0E3A9 /* AVPlayingService.swift */; };
 		E1FD78F81FA5CBC600BAF642 /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FD78F71FA5CBC600BAF642 /* TrackCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +68,7 @@
 		E1611F6E1F9FA81100DB8E95 /* APIRestClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRestClient.swift; sourceTree = "<group>"; };
 		E1611F701FA0D65000DB8E95 /* iTunes.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = iTunes.plist; sourceTree = "<group>"; };
 		E1611F721FA45B8700DB8E95 /* test.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = test.json; sourceTree = "<group>"; };
+		E1E808051FAB7D7A00B0E3A9 /* AVPlayingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayingService.swift; sourceTree = "<group>"; };
 		E1FD78F71FA5CBC600BAF642 /* TrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -189,6 +191,7 @@
 			children = (
 				E1611F6A1F9E46B500DB8E95 /* DownloadService.swift */,
 				E1611F6C1F9FA76F00DB8E95 /* SearchingService.swift */,
+				E1E808051FAB7D7A00B0E3A9 /* AVPlayingService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -440,6 +443,7 @@
 			files = (
 				E1611F651F9E3C4100DB8E95 /* DataLoader.swift in Sources */,
 				E1611F6B1F9E46B500DB8E95 /* DownloadService.swift in Sources */,
+				E1E808061FAB7D7A00B0E3A9 /* AVPlayingService.swift in Sources */,
 				E12078A01FA8CDC9001C155A /* DownloadTaskStore.swift in Sources */,
 				E120842C1F9D0215000E63C5 /* Download.swift in Sources */,
 				E1611F6F1F9FA81100DB8E95 /* APIRestClient.swift in Sources */,
