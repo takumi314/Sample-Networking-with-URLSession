@@ -37,33 +37,6 @@ class SearchViewController: UIViewController {
 
 }
 
-extension SearchViewController {
-
-    func showPlayer(_ track: Track) {
-        let vc = AVPlayerViewController()
-        if #available(iOS 11.0, *) {
-            vc.entersFullScreenWhenPlaybackBegins = true
-            vc.exitsFullScreenWhenPlaybackEnds = true
-        } else {
-            // Fallback on earlier versions
-        }
-        vc.allowsPictureInPicturePlayback = true
-        
-
-        present(vc, animated: true, completion: nil)
-        vc.player = player(track)
-        vc.player?.play()
-    }
-
-    func player(_ track: Track) -> AVPlayer {
-        let url = DownloadTaskStore.localPath(for: track.previewURL)
-        let player = AVPlayer(url: url)
-        return player
-    }
-
-
-}
-
 extension SearchViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -137,7 +110,7 @@ extension SearchViewController: UITableViewDelegate {
         // cell tapped by indexPath.row
         let track = searchResults[indexPath.row]
         if track.downloaded {
-            self.showPlayer(track)
+            AVPlayingService(track: track, parent: self).play()
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
