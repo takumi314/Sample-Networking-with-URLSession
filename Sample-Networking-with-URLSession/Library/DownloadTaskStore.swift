@@ -31,7 +31,7 @@ class DownloadTaskStore {
         self.manager = manager
         self.sourceURL = sourceURL
         self.tempPath = tempPath
-        self.destinationPath = localPath(for: sourceURL)
+        self.destinationPath = DownloadTaskStore.localPath(for: sourceURL)
     }
 
     ///
@@ -65,8 +65,8 @@ class DownloadTaskStore {
     ///
     /// Download Task stores here
     ///
-    func localPath(for url: URL) -> URL {
-        let documentPath = manager.urls(for: .documentDirectory, in: .userDomainMask).first!
+    static func localPath(for url: URL) -> URL {
+        let documentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         return documentPath.appendingPathComponent(url.lastPathComponent)
     }
 
