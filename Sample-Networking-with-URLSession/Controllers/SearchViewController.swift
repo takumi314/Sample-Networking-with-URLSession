@@ -31,6 +31,11 @@ class SearchViewController: UIViewController {
         tableView.delegate = self
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        searchBar.placeholder = "検索キーワードを入力してください"
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
