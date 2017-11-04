@@ -31,6 +31,12 @@ class SearchViewController: UIViewController {
         tableView.delegate = self
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        searchBar.placeholder = "検索キーワードを入力してください"
+        tableView.separatorStyle = .none
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -48,7 +54,7 @@ extension SearchViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60.0
+        return 70.0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -122,9 +128,18 @@ extension SearchViewController: UISearchBarDelegate {
         searchBar.resignFirstResponder()
     }
 
+    func showCancel() {
+        searchBar.showsCancelButton = true
+    }
+
+    func hideCancel() {
+        searchBar.showsCancelButton = false
+    }
+
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         // Execution
         dismissKeyboard()
+        hideCancel()
         if !searchBar.text!.isEmpty, let term = searchBar.text {
             UIApplication.shared.isNetworkActivityIndicatorVisible = true
             SearchingService(URLSession())
@@ -144,8 +159,16 @@ extension SearchViewController: UISearchBarDelegate {
         }
     }
 
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        showCancel()
+        return true
+    }
+
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        // Cancel
+        print("Cancel tapped")
+        dismissKeyboard()
+        hideCancel()
+        searchBar.text = ""
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         // Validation
@@ -155,12 +178,6 @@ extension SearchViewController: UISearchBarDelegate {
         return true
     }
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-    }
-    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
-        if searchBar.isFirstResponder {
-            searchBar.resignFirstResponder()
-        }
-        return false
     }
 }
 
