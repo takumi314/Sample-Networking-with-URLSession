@@ -156,11 +156,5 @@ extension SearchViewController: UISearchBarDelegate {
     }
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
     }
-    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
-        if searchBar.isFirstResponder {
-            searchBar.resignFirstResponder()
-        }
-        return false
-    }
 }
 
