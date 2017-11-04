@@ -127,9 +127,18 @@ extension SearchViewController: UISearchBarDelegate {
         searchBar.resignFirstResponder()
     }
 
+    func showCancel() {
+        searchBar.showsCancelButton = true
+    }
+
+    func hideCancel() {
+        searchBar.showsCancelButton = false
+    }
+
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         // Execution
         dismissKeyboard()
+        hideCancel()
         if !searchBar.text!.isEmpty, let term = searchBar.text {
             UIApplication.shared.isNetworkActivityIndicatorVisible = true
             SearchingService(URLSession())
@@ -149,8 +158,16 @@ extension SearchViewController: UISearchBarDelegate {
         }
     }
 
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        showCancel()
+        return true
+    }
+
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        // Cancel
+        print("Cancel tapped")
+        dismissKeyboard()
+        hideCancel()
+        searchBar.text = ""
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         // Validation
