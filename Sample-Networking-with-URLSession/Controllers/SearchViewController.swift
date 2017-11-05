@@ -20,7 +20,13 @@ class SearchViewController: UIViewController {
 
     private var searchResults = [Track]()
 
-    private let downloadService = DownloadService()
+    private var downloadService: DownloadService?
+
+    lazy var session: URLSession = {
+        let configuration = URLSessionConfiguration.default
+//        let configuration = URLSessionConfiguration.background(withIdentifier: "bgSessionConfiguration")
+        return URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
+    }()
 
     // MARK: - Life cycle
 
@@ -29,6 +35,8 @@ class SearchViewController: UIViewController {
         searchBar.delegate = self
         tableView.dataSource = self
         tableView.delegate = self
+
+        downloadService = DownloadService(session: session)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -62,33 +70,33 @@ extension SearchViewController: UITableViewDataSource {
         
         cell.pauseTappedHandler = { [unowned self] cell in
             if let indexPath = self.tableView.indexPath(for: cell) {
-                self.downloadService.pauseDownload(self.searchResults[indexPath.row])
+                self.downloadService?.pauseDownload(self.searchResults[indexPath.row])
                 self.reload(indexPath.row)
             }
         }
         cell.cancelTappedHandler = { cell in
             if let indexPath = self.tableView.indexPath(for: cell) {
-                self.downloadService.cancelDownload(self.searchResults[indexPath.row])
+                self.downloadService?.cancelDownload(self.searchResults[indexPath.row])
                 self.reload(indexPath.row)
             }
         }
         cell.downloadTappedHandler = { cell in
             if let indexPath = self.tableView.indexPath(for: cell) {
-                self.downloadService.delegate = self
-                self.downloadService.startDownload(self.searchResults[indexPath.row])
+                self.downloadService?.delegate = self
+                self.downloadService?.startDownload(self.searchResults[indexPath.row])
                 self.reload(indexPath.row)
             }
         }
         cell.resumeTappedHandler = { cell in
             if let indexPath = self.tableView.indexPath(for: cell) {
-                self.downloadService.delegate = self
-                self.downloadService.resumeDownload(self.searchResults[indexPath.row])
+                self.downloadService?.delegate = self
+                self.downloadService?.resumeDownload(self.searchResults[indexPath.row])
                 self.reload(indexPath.row)
             }
         }
 
         let track = searchResults[indexPath.row]
-        cell.configure(track: track, downloaded: track.downloaded, download: downloadService.activeDownloads[track.previewURL])
+        cell.configure(track: track, downloaded: track.downloaded, download: downloadService?.activeDownloads[track.previewURL])
 
         return cell
     }
@@ -179,5 +187,38 @@ extension SearchViewController: UISearchBarDelegate {
     }
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
     }
+}
+
+extension SearchViewController: URLSessionDownloadDelegate {
+
+    func urlSession(_ session: URLSession,
+                    downloadTask: URLSessionDownloadTask,
+                    didFinishDownloadingTo location: URL) {
+        print("did Finish downloadinf")
+    }
+
+    func urlSession(_ session: URLSession,
+                    downloadTask: URLSessionDownloadTask,
+                    didWriteData bytesWritten: Int64,
+                    totalBytesWritten: Int64,
+                    totalBytesExpectedToWrite: Int64) {
+        print("Downloading ... ")
+        guard let requestURL = downloadTask.originalRequest?.url else {
+            return
+        }
+        if var download = downloadService?.activeDownloads[requestURL], download.isDownloading {
+            download.progress = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
+            let totalSize = ByteCountFormatter.string(fromByteCount: totalBytesExpectedToWrite, countStyle: .file)
+            let index = download.track.index
+            DispatchQueue.main.sync {
+                let cell = tableView.cellForRow(at: IndexPath(row: index!, section: 0)) as? TrackCell
+                cell?.progressView.progress = download.progress
+                cell?.progressLabel.text = "\(download.progress * 100)% of \(totalSize)"
+            }
+        }
+
+
+    }
+
 }
 

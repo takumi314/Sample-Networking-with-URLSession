@@ -14,32 +14,37 @@ protocol DownloadServiceDelegate {
 
 // Downloads song snippets, and stores in local file.
 // Allows cancel, pause, resume download.
-class DownloadService {
-
-    private let downloader = Downloader(URLSession(configuration: URLSessionConfiguration.default))
+class DownloadService: NSObject {
+    private let downloader: Downloader
 
     var delegate: DownloadServiceDelegate?
     var activeDownloads = [URL: Download]()
 
+    init(session: URLSession) {
+        self.downloader = Downloader(session)
+    }
+
     func startDownload(_ track: Track) {
         var download = Download(track: track)
-        download.task = downloader.load(from: track.previewURL, delegate: self) { [weak self] result in
-            guard let `self` = self else {
-                return
-            }
-            switch result {
-            case .error(let error):
-                print("could not download: \(error.localizedDescription)")
-                return
-            case .data(let location):
-                print("TemporatyPath: \(location)")
-                if self.storedTrack(of: download, downloadedTo: location) {
-                    // For refreshing a view
-                    self.delegate?.didFinish(self, download: download)
-                }
-                break
-            }
-        }
+        download.task = downloader.load(from: track.previewURL, delegate: self)
+
+//        download.task = downloader.load(from: track.previewURL, delegate: self) { [weak self] result in
+//            guard let `self` = self else {
+//                return
+//            }
+//            switch result {
+//            case .error(let error):
+//                print("could not download: \(error.localizedDescription)")
+//                return
+//            case .data(let location):
+//                print("TemporatyPath: \(location)")
+//                if self.storedTrack(of: download, downloadedTo: location) {
+//                    // For refreshing a view
+//                    self.delegate?.didFinish(self, download: download)
+//                }
+//                break
+//            }
+//        }
         download.isDownloading = true
         activeDownloads[download.track.previewURL] = download
     }
@@ -114,5 +119,5 @@ extension DownloadService: DownloaderDelegate {
             delegate?.didFinish(self, download: download!)
         }
     }
-    
+
 }
