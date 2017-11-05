@@ -20,7 +20,8 @@ class SearchViewController: UIViewController {
 
     private var searchResults = [Track]()
 
-    private let downloadService = DownloadService()
+    private var downloadService: DownloadService?
+
 
     // MARK: - Life cycle
 
@@ -29,6 +30,8 @@ class SearchViewController: UIViewController {
         searchBar.delegate = self
         tableView.dataSource = self
         tableView.delegate = self
+
+        downloadService = DownloadService()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -62,33 +65,33 @@ extension SearchViewController: UITableViewDataSource {
         
         cell.pauseTappedHandler = { [unowned self] cell in
             if let indexPath = self.tableView.indexPath(for: cell) {
-                self.downloadService.pauseDownload(self.searchResults[indexPath.row])
+                self.downloadService?.pauseDownload(self.searchResults[indexPath.row])
                 self.reload(indexPath.row)
             }
         }
         cell.cancelTappedHandler = { cell in
             if let indexPath = self.tableView.indexPath(for: cell) {
-                self.downloadService.cancelDownload(self.searchResults[indexPath.row])
+                self.downloadService?.cancelDownload(self.searchResults[indexPath.row])
                 self.reload(indexPath.row)
             }
         }
         cell.downloadTappedHandler = { cell in
             if let indexPath = self.tableView.indexPath(for: cell) {
-                self.downloadService.delegate = self
-                self.downloadService.startDownload(self.searchResults[indexPath.row])
+                self.downloadService?.delegate = self
+                self.downloadService?.startDownload(self.searchResults[indexPath.row])
                 self.reload(indexPath.row)
             }
         }
         cell.resumeTappedHandler = { cell in
             if let indexPath = self.tableView.indexPath(for: cell) {
-                self.downloadService.delegate = self
-                self.downloadService.resumeDownload(self.searchResults[indexPath.row])
+                self.downloadService?.delegate = self
+                self.downloadService?.resumeDownload(self.searchResults[indexPath.row])
                 self.reload(indexPath.row)
             }
         }
 
         let track = searchResults[indexPath.row]
-        cell.configure(track: track, downloaded: track.downloaded, download: downloadService.activeDownloads[track.previewURL])
+        cell.configure(track: track, downloaded: track.downloaded, download: downloadService?.activeDownloads[track.previewURL])
 
         return cell
     }
@@ -109,6 +112,18 @@ extension SearchViewController: DownloadServiceDelegate {
             }
         }
     }
+
+    func updateProgress(_ service: DownloadService, download: Download, totalBytesExpectedToWrite: Int64) {
+        guard let index = download.track.index else {
+            return
+        }
+        let totalSize = ByteCountFormatter.string(fromByteCount: totalBytesExpectedToWrite, countStyle: .file)
+        DispatchQueue.main.sync {
+            let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? TrackCell
+            cell?.updateProgress(of: download, totalSize: totalSize)
+        }
+    }
+
 }
 
 extension SearchViewController: UITableViewDelegate {
@@ -179,5 +194,5 @@ extension SearchViewController: UISearchBarDelegate {
     }
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
     }
-}
 
+}

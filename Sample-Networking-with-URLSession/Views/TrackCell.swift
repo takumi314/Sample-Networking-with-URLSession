@@ -77,5 +77,10 @@ class TrackCell: UITableViewCell {
             }
         }
     }
+    
+    func updateProgress(of download: Download, totalSize: String) {
+        self.progressView.progress = download.progress
+        self.progressLabel.text = String(format: "%.1f%% of %@", download.progress, totalSize)
+    }
 
 }

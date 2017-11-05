@@ -30,8 +30,6 @@ class Downloader: NSObject {
         }
     }
 
-    private var delegate: DownloaderDelegate?
-
     private let engine: NetworkEngine
 
     init(_ engine: NetworkEngine) {
@@ -39,7 +37,6 @@ class Downloader: NSObject {
     }
 
     func load(from url: URL, delegate: DownloaderDelegate?, completionHadler: @escaping (Result) -> Void) -> URLSessionDownloadTask {
-        self.delegate = delegate
         print("RequestURL: \(url)")
         return engine.performDownload(for: url) { (url, response, error) in
             if let error = error {
@@ -54,36 +51,13 @@ class Downloader: NSObject {
         }
     }
 
-    func load(with resumeData: Data, delegate: DownloaderDelegate) -> URLSessionDownloadTask {
-        self.delegate = delegate
+    func load(with resumeData: Data) -> URLSessionDownloadTask {
         return engine.performDownload(with: resumeData)
     }
-    func load(from url: URL, delegate: DownloaderDelegate) -> URLSessionDownloadTask {
-        self.delegate = delegate
+    func load(from url: URL) -> URLSessionDownloadTask {
+        print("RequestURL: \(url)")
         return engine.performDownload(with: url)
     }
 
 }
 
-extension Downloader: URLSessionDownloadDelegate {
-
-    //
-    // Stores downloaded file
-    //
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        if let delegate = self.delegate {
-            delegate.didFinish(downloader: self, downloadTask: downloadTask, downloadingTo: location)
-        }
-    }
-
-    //
-    // Updates progress info
-    //
-    func urlSession(_ session: URLSession,
-                    downloadTask: URLSessionDownloadTask,
-                    didWriteData bytesWritten: Int64,
-                    totalBytesWritten: Int64,
-                    totalBytesExpectedToWrite: Int64) {
-        //
-    }
-}
