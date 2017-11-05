@@ -27,11 +27,6 @@ class DownloadService: NSObject {
     var delegate: DownloadServiceDelegate?
     var activeDownloads = [URL: Download]()
 
-//    convenience init(session: URLSession) {
-//        self.downloader = Downloader(self.session)
-//        self.int
-//    }
-
     func startDownload(_ track: Track) {
         downloader = Downloader(session)
         var download = Download(track: track)
