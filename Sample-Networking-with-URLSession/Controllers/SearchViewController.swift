@@ -195,6 +195,22 @@ extension SearchViewController: URLSessionDownloadDelegate {
                     downloadTask: URLSessionDownloadTask,
                     didFinishDownloadingTo location: URL) {
         print("did Finish downloadinf")
+        guard let url = downloadTask.originalRequest?.url,
+            let downloadService = self.downloadService,
+            let download = downloadService.activeDownloads[url]  else {
+            return
+        }
+        print("TemporatyPath: \(location)")
+        if downloadService.storedTrack(of: download, downloadedTo: location) {
+            // Update the cell
+            if let index = download.track.index {
+                searchResults[index].downloaded = true
+                DispatchQueue.main.async { [weak self] in
+                    self?.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+                }
+            }
+        }
+        
     }
 
     func urlSession(_ session: URLSession,

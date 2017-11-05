@@ -79,9 +79,7 @@ class DownloadService: NSObject {
         }
     }
 
-    // MARK: - Privates
-
-    private func storedTrack(of download: Download, downloadedTo location: URL ) -> Bool {
+    func storedTrack(of download: Download, downloadedTo location: URL ) -> Bool {
         guard let sourceUrl = requestURL(of: download) else {
             return false
         }
@@ -90,6 +88,8 @@ class DownloadService: NSObject {
 
         return store.copy()
     }
+
+    // MARK: - Privates
 
     private func requestURL(of download: Download) -> URL? {
         guard let sourceUrl = download.task?.originalRequest?.url else {

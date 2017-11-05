@@ -59,6 +59,7 @@ class Downloader: NSObject {
         return engine.performDownload(with: resumeData)
     }
     func load(from url: URL, delegate: DownloaderDelegate) -> URLSessionDownloadTask {
+        print("RequestURL: \(url)")
         self.delegate = delegate
         return engine.performDownload(with: url)
     }
