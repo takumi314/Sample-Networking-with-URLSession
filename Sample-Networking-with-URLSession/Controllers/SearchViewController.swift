@@ -22,11 +22,6 @@ class SearchViewController: UIViewController {
 
     private var downloadService: DownloadService?
 
-    lazy var session: URLSession = {
-        let configuration = URLSessionConfiguration.default
-//        let configuration = URLSessionConfiguration.background(withIdentifier: "bgSessionConfiguration")
-        return URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
-    }()
 
     // MARK: - Life cycle
 
@@ -36,7 +31,7 @@ class SearchViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
 
-        downloadService = DownloadService(session: session)
+        downloadService = DownloadService()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -117,6 +112,18 @@ extension SearchViewController: DownloadServiceDelegate {
             }
         }
     }
+
+    func updateProgress(_ service: DownloadService, download: Download, totalBytesExpectedToWrite: Int64) {
+        guard let index = download.track.index else {
+            return
+        }
+        let totalSize = ByteCountFormatter.string(fromByteCount: totalBytesExpectedToWrite, countStyle: .file)
+        DispatchQueue.main.sync {
+            let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? TrackCell
+            cell?.updateProgress(of: download, totalSize: totalSize)
+        }
+    }
+
 }
 
 extension SearchViewController: UITableViewDelegate {
@@ -187,54 +194,5 @@ extension SearchViewController: UISearchBarDelegate {
     }
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
     }
-}
-
-extension SearchViewController: URLSessionDownloadDelegate {
-
-    func urlSession(_ session: URLSession,
-                    downloadTask: URLSessionDownloadTask,
-                    didFinishDownloadingTo location: URL) {
-        print("did Finish downloadinf")
-        guard let url = downloadTask.originalRequest?.url,
-            let downloadService = self.downloadService,
-            let download = downloadService.activeDownloads[url]  else {
-            return
-        }
-        print("TemporatyPath: \(location)")
-        if downloadService.storedTrack(of: download, downloadedTo: location) {
-            // Update the cell
-            if let index = download.track.index {
-                searchResults[index].downloaded = true
-                DispatchQueue.main.async { [weak self] in
-                    self?.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
-                }
-            }
-        }
-        
-    }
-
-    func urlSession(_ session: URLSession,
-                    downloadTask: URLSessionDownloadTask,
-                    didWriteData bytesWritten: Int64,
-                    totalBytesWritten: Int64,
-                    totalBytesExpectedToWrite: Int64) {
-        print("Downloading ... ")
-        guard let requestURL = downloadTask.originalRequest?.url else {
-            return
-        }
-        if var download = downloadService?.activeDownloads[requestURL], download.isDownloading {
-            download.progress = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
-            let totalSize = ByteCountFormatter.string(fromByteCount: totalBytesExpectedToWrite, countStyle: .file)
-            let index = download.track.index
-            DispatchQueue.main.sync {
-                let cell = tableView.cellForRow(at: IndexPath(row: index!, section: 0)) as? TrackCell
-                cell?.progressView.progress = download.progress
-                cell?.progressLabel.text = "\(download.progress * 100)% of \(totalSize)"
-            }
-        }
-
-
-    }
 
 }
-
