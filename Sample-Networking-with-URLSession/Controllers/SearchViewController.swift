@@ -63,29 +63,35 @@ extension SearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: TrackCell  = tableView.dequeueReusableCell(withIdentifier: "trackCell", for: indexPath) as! TrackCell
         
-        cell.pauseTappedHandler = { [unowned self] cell in
+        cell.pauseTappedHandler = { [weak self] cell in
+            guard let `self` = self, let service = self.downloadService else { return }
             if let indexPath = self.tableView.indexPath(for: cell) {
-                self.downloadService?.pauseDownload(self.searchResults[indexPath.row])
+                service.delegate = self
+                service.pauseDownload(self.searchResults[indexPath.row])
                 self.reload(indexPath.row)
             }
         }
-        cell.cancelTappedHandler = { cell in
+        cell.cancelTappedHandler = { [weak self] cell in
+            guard let `self` = self, let service = self.downloadService else { return }
             if let indexPath = self.tableView.indexPath(for: cell) {
-                self.downloadService?.cancelDownload(self.searchResults[indexPath.row])
+                service.delegate = self
+                service.cancelDownload(self.searchResults[indexPath.row])
                 self.reload(indexPath.row)
             }
         }
-        cell.downloadTappedHandler = { cell in
+        cell.downloadTappedHandler = { [weak self] cell in
+            guard let `self` = self, let service = self.downloadService else { return }
             if let indexPath = self.tableView.indexPath(for: cell) {
-                self.downloadService?.delegate = self
-                self.downloadService?.startDownload(self.searchResults[indexPath.row])
+                service.delegate = self
+                service.startDownload(self.searchResults[indexPath.row])
                 self.reload(indexPath.row)
             }
         }
-        cell.resumeTappedHandler = { cell in
+        cell.resumeTappedHandler = { [weak self] cell in
+            guard let `self` = self, let service = self.downloadService else { return }
             if let indexPath = self.tableView.indexPath(for: cell) {
-                self.downloadService?.delegate = self
-                self.downloadService?.resumeDownload(self.searchResults[indexPath.row])
+                service.delegate = self
+                service.resumeDownload(self.searchResults[indexPath.row])
                 self.reload(indexPath.row)
             }
         }
