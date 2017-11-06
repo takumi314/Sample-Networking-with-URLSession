@@ -41,16 +41,14 @@ class DownloadService: NSObject {
             download.task?.cancel { data in
                 download.resumeData = data
             }
-            download.isDownloading = false
+            activeDownloads[track.previewURL]?.isDownloading = false
         }
     }
 
     func cancelDownload(_ track: Track) {
         guard let download = activeDownloads[track.previewURL] else { return }
-        if download.isDownloading {
-            download.task?.cancel()
-            activeDownloads[track.previewURL] = nil
-        }
+        download.task?.cancel()
+        activeDownloads[track.previewURL] = nil
     }
 
     func resumeDownload(_ track: Track) {
@@ -62,7 +60,7 @@ class DownloadService: NSObject {
             } else {
                 download.task = downloader?.load(from: download.track.previewURL)
             }
-            download.isDownloading = true
+            activeDownloads[track.previewURL]?.isDownloading = true
         }
     }
 
