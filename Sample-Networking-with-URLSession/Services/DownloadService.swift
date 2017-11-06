@@ -47,10 +47,8 @@ class DownloadService: NSObject {
 
     func cancelDownload(_ track: Track) {
         guard let download = activeDownloads[track.previewURL] else { return }
-        if download.isDownloading {
-            download.task?.cancel()
-            activeDownloads[track.previewURL] = nil
-        }
+        download.task?.cancel()
+        activeDownloads[track.previewURL] = nil
     }
 
     func resumeDownload(_ track: Track) {
