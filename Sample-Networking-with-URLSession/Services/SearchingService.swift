@@ -57,7 +57,7 @@ class SearchingService: NSObject {
         return term.components(separatedBy: CharacterSet.whitespaces).joined(separator: "+")
     }
 
-    private func mapping(_ data: Data) {
+    func mapping(_ data: Data) {
         tracks.removeAll()
         do {
             let tracks = try JSONDecoder().decode(SearchResults.self, from: data).results
