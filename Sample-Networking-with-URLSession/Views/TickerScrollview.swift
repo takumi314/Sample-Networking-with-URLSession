@@ -14,7 +14,28 @@ protocol TickerScrollviewDelegate {
     func userEndTouch()
 }
 
-
 class TickerScrollview: UIScrollView {
+
+    // MARK: - TickerScrollviewDelegate
+
+    var tickerDelegate: TickerScrollviewDelegate?
+
+    // MARK: - Override methods
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        tickerDelegate?.userTouch()
+    }
+
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        tickerDelegate?.userDrag()
+    }
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if !isDragging {
+            next?.touchesEnded(touches, with: event)
+        }
+        super.touchesEnded(touches, with: event)
+        tickerDelegate?.userEndTouch()
+    }
 
 }
