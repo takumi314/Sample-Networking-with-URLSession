@@ -19,6 +19,7 @@
 		E120842C1F9D0215000E63C5 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = E120842B1F9D0215000E63C5 /* Download.swift */; };
 		E120842E1F9D027D000E63C5 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = E120842D1F9D027D000E63C5 /* Track.swift */; };
 		E1254D471FBF47B500C92B00 /* TickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1254D461FBF47B500C92B00 /* TickerView.swift */; };
+		E1254D491FBF487200C92B00 /* TickerScrollview.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1254D481FBF487200C92B00 /* TickerScrollview.swift */; };
 		E15A60691FB3671D008E0EAE /* UILabel+Ticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15A60681FB3671D008E0EAE /* UILabel+Ticker.swift */; };
 		E1611F651F9E3C4100DB8E95 /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1611F621F9E3C4100DB8E95 /* DataLoader.swift */; };
 		E1611F661F9E3C4100DB8E95 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1611F631F9E3C4100DB8E95 /* Downloader.swift */; };
@@ -64,6 +65,7 @@
 		E120842B1F9D0215000E63C5 /* Download.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
 		E120842D1F9D027D000E63C5 /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		E1254D461FBF47B500C92B00 /* TickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickerView.swift; sourceTree = "<group>"; };
+		E1254D481FBF487200C92B00 /* TickerScrollview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickerScrollview.swift; sourceTree = "<group>"; };
 		E15A60681FB3671D008E0EAE /* UILabel+Ticker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ticker.swift"; sourceTree = "<group>"; };
 		E1611F621F9E3C4100DB8E95 /* DataLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataLoader.swift; sourceTree = "<group>"; };
 		E1611F631F9E3C4100DB8E95 /* Downloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				E1FD78F71FA5CBC600BAF642 /* TrackCell.swift */,
 				E15A60681FB3671D008E0EAE /* UILabel+Ticker.swift */,
 				E1254D461FBF47B500C92B00 /* TickerView.swift */,
+				E1254D481FBF487200C92B00 /* TickerScrollview.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -463,6 +466,7 @@
 				E1611F661F9E3C4100DB8E95 /* Downloader.swift in Sources */,
 				E12084021F965CF7000E63C5 /* SearchViewController.swift in Sources */,
 				E12084001F965CF7000E63C5 /* AppDelegate.swift in Sources */,
+				E1254D491FBF487200C92B00 /* TickerScrollview.swift in Sources */,
 				E120842E1F9D027D000E63C5 /* Track.swift in Sources */,
 				E1611F6D1F9FA76F00DB8E95 /* SearchingService.swift in Sources */,
 			);
