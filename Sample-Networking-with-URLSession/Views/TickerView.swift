@@ -10,6 +10,11 @@ import UIKit
 
 class TickerView: UIView {
 
+    // MARK: - Define
+
+    static let SCROLLING_TIME_INTERVAL  = 0.1
+    static let SCROLLING_PIXEL_DISTANCE = CGFloat(1)
+
     // MARK: - Public properties
 
     var scrollView: TickerScrollview!
@@ -19,19 +24,99 @@ class TickerView: UIView {
     // MARk: - Public methods
 
     func labelSize(for text: String, _ font: UIFont) -> CGSize {
-        //
-
-        return scrollView.bounds.size
+        let attributes: [NSAttributedStringKey: Any] = [NSAttributedStringKey.font: font,
+                                                        NSAttributedStringKey.paragraphStyle: NSLineBreakMode.byWordWrapping]
+        let size = CGSize(width: 10000, height: frame.size.height)
+        let rect = (text as NSString).boundingRect(with: size,
+                                                   options: NSStringDrawingOptions.truncatesLastVisibleLine,
+                                                   attributes: attributes,
+                                                   context: nil)
+        return rect.size
     }
 
+    // MARK: - Initilizer
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.backgroundColor = .clear
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Override
+
+    override func draw(_ rect: CGRect) {
+        guard let _ = scrollView else {
+            return
+        }
+        scrollView.delegate = self
+        scrollView.tickerDelegate = self
+
+        scrollView.addSubview(incetanceLabel())
+        addSubview(scrollView)
+
+        contentWidth = 2 * frame.size.width + labelSize(for: marquee, font).width
+        scrollView.contentSize = CGSize(width: contentWidth, height: frame.size.height)
+
+        isScrolling = false
+        beginScrolling()
+    }
+
+    deinit {
+        font = nil
+        marquee = ""
+        stopScrolling()
+    }
 
     // MARK: - Private properties
 
-    private var scrollingTime: Timer?
+    private var scrollingTimer: Timer?
     private var contentWidth: CGFloat = 0.0
     private var labelWidth: CGFloat = 0.0
-    private var startScrolling: Bool = false
+    private var isScrolling: Bool = false
 
+    // MAKR: - Private methods
+
+    private func incetanceLabel() -> UILabel {
+        let rect = CGRect(x: frame.size.width, y: 0, width: labelWidth, height: frame.size.height)
+        let label = UILabel(frame: rect)
+        label.font = font
+        label.backgroundColor = .clear
+        label.textColor = .white
+        label.text = marquee
+        return label
+    }
+
+    private func beginScrolling() {
+        guard isScrolling else {
+            return
+        }
+        isScrolling = true
+        scrollingTimer = Timer.scheduledTimer(timeInterval: TickerView.SCROLLING_TIME_INTERVAL,
+                                              target: self,
+                                              selector: #selector(scroll),
+                                              userInfo: nil,
+                                              repeats: true)
+    }
+
+    private func stopScrolling() {
+        if isScrolling {
+            scrollingTimer?.invalidate()
+            scrollingTimer = nil
+            isScrolling = false
+        }
+    }
+
+    @objc private func scroll(_ timer: Timer) {
+        if scrollView.contentOffset.x >= contentWidth - frame.size.width {
+            scrollView.contentOffset = CGPoint(x: 0.0, y: 0.0)
+        }
+        var point = scrollView.contentOffset
+        point.x += TickerView.SCROLLING_PIXEL_DISTANCE
+        scrollView.contentOffset = point
+    }
 
 }
 
@@ -58,7 +143,7 @@ extension TickerView: UIScrollViewDelegate {
 
     // called on finger up if the user dragged. decelerate is true if it will continue moving afterwards
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        //
+        beginScrolling()
     }
 
     func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
@@ -67,10 +152,12 @@ extension TickerView: UIScrollViewDelegate {
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         // called when scroll view grinds to a halt
+        beginScrolling()
     }
 
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         // called when setContentOffset/scrollRectVisible:animated: finishes. not called if not animating
+        beginScrolling()
     }
 
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
@@ -107,7 +194,8 @@ extension TickerView: UIScrollViewDelegate {
 extension TickerView: TickerScrollviewDelegate {
 
     func userTouch() {
-        //
+        //stop scrolling when user touch it
+        stopScrolling()
     }
 
     func userDrag() {
@@ -115,7 +203,8 @@ extension TickerView: TickerScrollviewDelegate {
     }
 
     func userEndTouch() {
-        //
+        //start scrolling again when user end touching
+        beginScrolling()
     }
 
 }
