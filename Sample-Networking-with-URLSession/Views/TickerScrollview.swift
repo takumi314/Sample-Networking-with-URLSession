@@ -8,6 +8,13 @@
 
 import UIKit
 
+protocol TickerScrollviewDelegate {
+    func userTouch()
+    func userDrag()
+    func userEndTouch()
+}
+
+
 class TickerScrollview: UIScrollView {
 
 }
