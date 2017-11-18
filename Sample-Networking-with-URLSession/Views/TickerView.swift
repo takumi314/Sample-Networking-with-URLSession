@@ -28,7 +28,7 @@ class TickerView: UIView {
                                                         NSAttributedStringKey.paragraphStyle: NSLineBreakMode.byWordWrapping]
         let size = CGSize(width: 10000, height: frame.size.height)
         let rect = (text as NSString).boundingRect(with: size,
-                                                   options: NSStringDrawingOptions.truncatesLastVisibleLine,
+                                                   options: NSStringDrawingOptions.usesLineFragmentOrigin,
                                                    attributes: attributes,
                                                    context: nil)
         return rect.size
