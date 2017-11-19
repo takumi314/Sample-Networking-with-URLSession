@@ -21,7 +21,31 @@ class TickerView: UIView {
     var marquee: String = ""
     var font: UIFont!
 
+    ///
+    /// Ticker speed: how many pixels per second
+    ///
+    var speed: Float = 1.0
+
+    ///
+    /// default: moving to the left side only if true.
+    ///
+    var direction: Bool = false
+
     // MARk: - Public methods
+
+    ///
+    /// stop the moving ticker strings.
+    ///
+    func pause() -> Void {
+        stopScrolling()
+    }
+
+    ///
+    /// restart the stoping ticker strings.
+    ///
+    func resume() -> Void {
+         beginScrolling()
+    }
 
     func labelSize(for text: String, _ font: UIFont) -> CGSize {
         let attributes: [NSAttributedStringKey: Any] = [NSAttributedStringKey.font: font,
@@ -77,6 +101,13 @@ class TickerView: UIView {
     private var labelWidth: CGFloat = 0.0
     private var isScrolling: Bool = false
 
+    private var step: Float {
+        get {
+            return speed * 0.1
+        }
+    }
+
+
     // MAKR: - Private methods
 
     private func incetanceLabel() -> UILabel {
@@ -114,7 +145,11 @@ class TickerView: UIView {
             scrollView.contentOffset = CGPoint(x: 0.0, y: 0.0)
         }
         var point = scrollView.contentOffset
-        point.x += TickerView.SCROLLING_PIXEL_DISTANCE
+        if direction {
+            point.x += TickerView.SCROLLING_PIXEL_DISTANCE * CGFloat(step)
+        } else {
+            point.x -= TickerView.SCROLLING_PIXEL_DISTANCE * CGFloat(step)
+        }
         scrollView.contentOffset = point
     }
 
